@@ -1,0 +1,125 @@
+goal:
+	replace the tradional physical textbook & ebook
+	make learning complex material easier through a more interactive medium
+	learn anything for free!
+	wikipedia model - let anyone contribute and verify instead of only (paid) authors
+
+why this is important:
+	textbooks cost a lot! continue increasing costs
+	alternatives are eBooks, PDFS, websites (we can do better!)
+		=> see medium advantage below
+	clases are getting bigger defer some teaching to the book itself
+	profs can edit as they please - custom books for each course
+	always be updated without charge! git pull does this why can't ebooks?
+
+features:
+	hyperlinked content
+	index everywhere feature e.g:
+		instead of opening the appendex/index of a real book or simply changing
+		the page in an ebook, 
+		open an iframe with relevent info right there!
+	embed images/video/gifs...etc.
+	embed interactive demos => unity, HTML5canvas, etc...
+	embed programming exercises => powered by Submitty
+	annotations e.g:
+		proofs typically skip a lot of steps because people who know what they're 
+		doing can skip them, but confusing for new users
+		solution: allow "annotations" which reveal additional steps/info to help
+		new people without making proofs/info to long to read
+
+future goals:
+	digital "library" to share sBooks
+	allow "forks" and "remixes" kinda like git (submitty hub lol)
+	auto-generated problems? (for cs & math)
+		=> CS1 would be a good problem space to test this,
+			exercises simple - easier to create?
+			they cannot be looked up or copied
+
+technical:
+	probably python (maybe c++ - barbs)
+	build an interperture for simple config to a nicely formated "book"
+	method to link inbetween books, eg. grab diagram/chapter from someone else
+	build way to test user input to submitty (or locally if possible) for CS
+
+
+
+index everywhere feature:
+	-----------------	-----------------
+	|		|	|	--------|
+	| <LINK>	|  ==>  |       |<INFO>|| 
+	|	^	|	|	--------|	
+	-----------------	-----------------
+
+However this can be "infinite"! for example the info page can also have links that 
+open new "frames" which also have links and so on and so on.
+
+E.g:
+	A chapter on maps could link to tree which could link to ptrs, memory, etc
+	If a student forgets any of these can quickly parse all relevent material
+
+I like the idea of parsing a file to HTML/CSS/JS. This is the closest thing to a platform-
+independent application and we can also utalize progressive web apps ;) 
+
+Also naming this is kinda hard
+smartBooks     	<kinda vague>
+openBook(s)     <doesn't really convey the message>
+submittyBooks   <do we want to be tied down to submitty - this should be for any subject>
+shailBooks      <yessss>
+hyperBooks	<selmy>
+RPIopencourseware <a few others do this like MITocw, Standford ocw>
+I think my fav so far is openBook
+
+medium advantage:
+	From the book the Medium is the Message:
+	Certain forms of media are more engaging than others, while some are more passive
+	than others. Some can also convey more information than others
+
+	Passiveness (10 most passive)
+	0 <=============================================================> 10
+	|	|			|		   |		|
+	|	|			us!	           |		video/TV
+	books	|					   lectures
+		videogames	
+
+	Books and videogames 					Video/Tv doesn't need you
+	require engagement,					You can pay attention or 
+	you cant use a book					not and the video moves
+	without putting effort					along
+	same with video games
+
+
+	Engaging (10 being the most interesting)
+	0 <==============================================================> 10
+		|      |                |			|         |
+		books  |                us!                     video     videogames
+		       lecture
+
+	Its easy to loose attention				video/videogames are  
+	to books & lecture,					way more interesting!
+	especially today!					the brain likes motion
+
+	Information (10 being the most info dense)
+	0 <===============================================================> 10
+		|		|					| |
+		videogames	|					| books
+				video					lecture
+									  us!
+	Video games typically					   Lots of info!
+	require more work per					 Each word is a unit of info
+	amount of info shown
+	same with video. It is
+	easy to show simple ideas
+	but doesn't scale with complexity
+
+	From this: 
+		books & lecture are info dense but not engaging as other media
+		Video and videogames are engaging but can't express as much info
+		How about a happy medium?
+			Sections that can express info like books
+			Capture engagement using interactive sections
+				=> demos, videos, games, exercises		
+			Utalize submitty - e.g you must complete these 3 exercises 
+			as a grade => this can help reduce passivness
+
+
+
