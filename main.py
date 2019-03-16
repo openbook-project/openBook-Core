@@ -21,7 +21,7 @@ if __name__ == "__main__":
 	output.close()
 	content = parser.parse(file)
 
-	print(content)
+	# print(content)
 	output = open('output.html', 'a')
 
 	parser.driver(content, output)

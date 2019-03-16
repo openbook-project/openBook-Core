@@ -26,16 +26,16 @@ def parse(str):
 
 def driver(blocks, out_file):
 	stack = []
-	for op in blocks:
-		if op in KEYS:
-			print(op)
-			stack.append(op)
+	for content in blocks:
+		if content in KEYS:
+			# print(op)
+			stack.append(content)
 		else:
 			func = stack.pop() 
 			if func == 'title':
-				title(op, out_file)
+				html_title(content, out_file)
 			elif func == 'par':
-				pass
+				html_par(content, out_file)
 			elif func == 'image':
 				pass
 			elif func == 'vid':
@@ -51,8 +51,11 @@ def driver(blocks, out_file):
 			else:
 				print('Warning, operation not found')	
 
-def title(content, out_file):
-	out_file.write('<title>' + content + '</title>')
+def html_title(content, out_file):
+	out_file.write('<h1>' + re.sub('[\n]', '', content) + '</h1>')
+
+def html_par(content, out_file):
+	out_file.write('<p>' + content + '</p>')
 
 if __name__ == '__main__':
 	filename = input("enter a .book file name  ==> ")
