@@ -1,5 +1,5 @@
 import parser
-
+import os
 
 HTML = ""
 
@@ -18,10 +18,16 @@ if __name__ == "__main__":
 	output.write(init_html)
 	outcss.write(init_css)
 
+	#create a media folder if one doesn't exist
+	path = os.getcwd() + "/media"
+	if not(os.path.exists(path)):
+		os.mkdir(path)
+		os.mkdir(path + "/images")
+		os.mkdir(path + "/videos")
+
 	output.close()
 	content = parser.parse(file)
 
-	# print(content)
 	output = open('output.html', 'a')
 
 	parser.driver(content, output)

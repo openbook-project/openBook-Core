@@ -1,6 +1,8 @@
 import re
+import os
 
 KEYS = ['title', 'emph', 'bold','par', 'image', 'vid', 'code', 'list', 'item', 'end']
+media_path = os.getcwd() + "/media/"
 
 def parse(str):
 	key = ''
@@ -24,7 +26,7 @@ def parse(str):
 			key += c
 	return blocks
 
-def driver(blocks, out_file):
+def driver(blocks, out_file, data = []):
 	stack = []
 	for content in blocks:
 		if content in KEYS:
@@ -37,9 +39,9 @@ def driver(blocks, out_file):
 			elif func == 'par':
 				html_par(content, out_file)
 			elif func == 'image':
-				pass
+				html_image(content, "TMP", out_file)
 			elif func == 'vid':
-				pass
+				html_vid(content, "TMP", out_file)
 			elif func == 'code':
 				pass
 			elif func == 'list':
@@ -49,13 +51,19 @@ def driver(blocks, out_file):
 			elif func == 'end':
 				pass
 			else:
-				print('Warning, operation not found')	
+				print('Warning, ' + func + ' operation not found')	
 
 def html_title(content, out_file):
 	out_file.write('<h1>' + re.sub('[\n]', '', content) + '</h1>')
 
 def html_par(content, out_file):
 	out_file.write('<p>' + content + '</p>')
+
+def html_image(content, name, out_file):
+	out_file.write('<img src="' + name + '">')
+
+def html_vid(content, name, out_file):
+	out_file.write('<video width = "250" controls><source src="' + media_path + 'videos/' + name + '" type="video/mp4"></video>')
 
 if __name__ == '__main__':
 	filename = input("enter a .book file name  ==> ")
