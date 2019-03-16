@@ -1,3 +1,5 @@
+KEYS = ['title', 'par', 'image', 'vid', 'code']
+HTML = ""
 def main():
 	print("Hello world")
 
@@ -10,4 +12,9 @@ if __name__ == "__main__":
 	file.replace("\n","")
 	file.replace("\r","")
 
+	output = open("output.html", "w")
+	outcss = open("output.css", "w")
+
+	init_html = "<!DOCTYPE html><html><head><link rel='stylesheet' href='output.css'></head><body>"
+	output.write(init_html)
 	parse(file)
