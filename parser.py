@@ -12,7 +12,6 @@ def parse(str):
 		if c == '#' and '#' in key:
 			op = re.sub('[#]', '', key)
 			blocks.append(op)
-			print(op)
 			key = ''
 		
 		# start a delimiter 
@@ -23,7 +22,7 @@ def parse(str):
 			key += c
 		else:
 			key += c
-	print(blocks) 
+	return blocks
 
 
 if __name__ == '__main__':
