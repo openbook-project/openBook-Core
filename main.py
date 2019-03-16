@@ -1,4 +1,3 @@
-KEYS = ['title', 'par', 'image', 'vid', 'code']
 HTML = ""
 def main():
 	print("Hello world")
