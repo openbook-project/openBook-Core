@@ -12,7 +12,7 @@ if __name__ == "__main__":
 	output = open("output.html", "w")
 	outcss = open("output.css", "w")
 
-	init_html = "<!DOCTYPE html><html><head><link rel='stylesheet' href='output.css'></head><body><div class='container'><div id='content'>"
+	init_html = "<!DOCTYPE html><html><head><link rel='stylesheet' href='output.css'></head><body><div class='container'><div id='content'>\n"
 	init_css = "html{font-family: Arial, Helvetica, sans-serif;line-height: 1.5;}h1{margin: 0px;}.container{display: flex;flex-direction: column ;justify-content: center;align-items: center;}#content{max-width: 50%;}"
 	end_html = "</div></div></body></html>"
 	output.write(init_html)
@@ -28,9 +28,10 @@ if __name__ == "__main__":
 	output.close()
 	content = parser.parse(file)
 
+	print(content[0])
 	output = open('output.html', 'a')
 
-	parser.driver(content, output)
+	parser.driver(content[0], output)
 	output.write(end_html)
 
 	output.close()
