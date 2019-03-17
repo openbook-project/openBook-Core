@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
 	init_css += c_select + drag_def
 
-	end_html = "<div style='border:solid 1px black;' id='code_edit'></div><br><br><br></div>\n</div>\n</body>\n</html>"
+	end_html = "<br><br><br></div>\n</div>\n</body>\n</html>"
 
 	output.write(init_html)
 	outcss.write(init_css)
@@ -54,7 +54,7 @@ if __name__ == "__main__":
 	parser.driver(content, output, media)
 	output.write(end_html)
 
-	init_js = "<script>var myCodeMirror = CodeMirror(document.getElementById(\'code_edit\'));function jump_section(){var section = document.getElementById('chapter_select');var index = section.selectedIndex+1; window.location = '#title' + index;}</script>"
+	init_js = "<script>var list = document.getElementsByClassName(\'edit\');for(var i = 0;i < list.length; i++){console.log('1');CodeMirror(document.getElementById(list[i].id));} function jump_section(){var section = document.getElementById('chapter_select');var index = section.selectedIndex+1; window.location = '#title' + index;}</script>"
 	#drag_js = "dragElement(document.getElementById('def1'));function dragElement(elmnt) {var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;if (document.getElementById(elmnt.id + 'header')) {/* if present, the header is where you move the DIV from:*/document.getElementById(elmnt.id + 'header').onmousedown = dragMouseDown;} else { elmnt.onmousedown = dragMouseDown;}function dragMouseDown(e) { e = e || window.event;e.preventDefault();pos3 = e.clientX;pos4 = e.clientY;document.onmouseup = closeDragElement; document.onmousemove = elementDrag;}function elementDrag(e) {e = e || window.event;e.preventDefault();pos1 = pos3 - e.clientX;pos2 = pos4 - e.clientY;pos3 = e.clientX;pos4 = e.clientY;elmnt.style.top = (elmnt.offsetTop - pos2) + 'px';elmnt.style.left = (elmnt.offsetLeft - pos1) + 'px';}function closeDragElement() {document.onmouseup = null;document.onmousemove = null;}}"
 	#hide_js = "function hideMe(id){var x = document.getElementById(id);if (x.style.display === 'none') {x.style.display = 'block';} else {x.style.display = 'none'; }}</script>"
 	output.write(init_js)
