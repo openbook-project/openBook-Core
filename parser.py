@@ -8,11 +8,15 @@ def parse(str):
 	key = ''
 	op = ''
 	blocks = []
+	data_params = []
 
 	for c in str:
 		# end a delimiter
 		if c == '#' and '#' in key:
 			op = re.sub('[#]', '', key)
+			source = re.search('\[(.*?)\]', key)
+			if source != None:
+				data_params.append(source.group(1))	
 			blocks.append(op)
 			key = ''
 		
@@ -24,7 +28,9 @@ def parse(str):
 			key += c
 		else:
 			key += c
-	return blocks
+	blocks.append(key)
+	print(data_params)
+	return blocks, data_params
 
 def driver(blocks, out_file, data = []):
 	stack = []
@@ -54,16 +60,16 @@ def driver(blocks, out_file, data = []):
 				print('Warning, ' + func + ' operation not found')	
 
 def html_title(content, out_file):
-	out_file.write('<h1>' + re.sub('[\n]', '', content) + '</h1>')
+	out_file.write('<h1>' + re.sub('[\n]', '', content) + '</h1>\n')
 
 def html_par(content, out_file):
-	out_file.write('<p>' + content + '</p>')
+	out_file.write('<p>' + content + '</p>\n')
 
 def html_image(content, name, out_file):
-	out_file.write('<img src="' + name + '">')
+	out_file.write('<img src="' + name + '">\n')
 
 def html_vid(content, name, out_file):
-	out_file.write('<video width = "250" controls><source src="' + media_path + 'videos/' + name + '" type="video/mp4"></video>')
+	out_file.write('<video width = "250" controls><source src="' + media_path + 'videos/' + name + '" type="video/mp4"></video>]\n')
 
 if __name__ == '__main__':
 	filename = input("enter a .book file name  ==> ")
@@ -72,4 +78,5 @@ if __name__ == '__main__':
 	# file.replace('\r','')
 	data = re.sub('[\r]', '', file)
 	control = parse(data)
-	drive(control)
+	#print(control)
+	# driver(control)
