@@ -13,8 +13,8 @@ if __name__ == "__main__":
 	output = open("output.html", "w")
 	outcss = open("output.css", "w")
 
-	title_count = len(re.findall("^.*#title#", file))
-	navbar = "Chapter Select: <select id='chapter_select'>"
+	title_count = len(re.findall(".*#title#", file))
+	navbar = "Chapter Select: <select onchange='jump_section()'id='chapter_select'>"
 	for i in range(title_count):
 		navbar += "<option value = 'chapter : " + str(i+1) + "'>" + str(i+1) + "</option>"
 
@@ -48,7 +48,7 @@ if __name__ == "__main__":
 	parser.driver(content[0], output)
 	output.write(end_html)
 
-	init_js = "<script></script>"
+	init_js = "<script>function jump_section(){var section = document.getElementById('chapter_select');var index = section.selectedIndex+1; window.location = '#title' + index;}</script>"
 	output.write(init_js)
 
 	output.close()

@@ -4,8 +4,6 @@ import os
 KEYS = ['title', 'emph', 'bold','par', 'image', 'vid', 'code', 'list', 'item', 'end']
 media_path = os.getcwd() + "/media/"
 
-title_count = 0
-
 def parse(str):
 	key = ''
 	op = ''
@@ -35,6 +33,7 @@ def parse(str):
 
 def driver(blocks, out_file, data = []):
 	stack = []
+	title_count = 0
 	for content in blocks:
 		if content in KEYS:
 			# print(op)
@@ -42,7 +41,8 @@ def driver(blocks, out_file, data = []):
 		else:
 			func = stack.pop() 
 			if func == 'title':
-				html_title(content, out_file)
+				title_count += 1
+				html_title(content, out_file, title_count)
 			elif func == 'par':
 				html_par(content, out_file)
 			elif func == 'image':
@@ -60,8 +60,8 @@ def driver(blocks, out_file, data = []):
 			else:
 				print('Warning, ' + func + ' operation not found')	
 
-def html_title(content, out_file):
-	out_file.write('<h1>' + re.sub('[\n]', '', content) + '</h1>\n')
+def html_title(content, out_file, id_ = 0):
+	out_file.write('<h1 id = "title' + str(id_) +'">' + re.sub('[\n]', '', content) + '</h1>\n')
 
 def html_par(content, out_file):
 	out_file.write('<p>' + content + '</p>\n')
