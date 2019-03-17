@@ -2,6 +2,8 @@ import re
 import os
 
 KEYS = ['title', 'emph', 'bold','par', 'image', 'vid', 'code', 'list', 'item', 'end']
+NESTABLE = ['emph', 'bold']
+CONVERSION = {'title' : 'h1', 'emph' : 'i', 'bold' : 'b', 'par' : 'p', 'list' : 'ul', 'item' : 'li', 'code' : 'pre'}
 media_path = os.getcwd() + "/media/"
 
 def parse(str):
@@ -17,54 +19,80 @@ def parse(str):
 			source = re.search('\[(.*?)\]', key)
 			if source != None:
 				data_params.append(source.group(1))	
-			blocks.append(op)
+				blocks.append(op.replace('[' + source.group(1) + ']', ''))
+			else:
+				blocks.append(op)
 			key = ''
 		
 		# start a delimiter 
 		elif c == '#':
-			if key != '' and op != '':
+			if newline_util(key) and op != '':
 				blocks.append(key)
 			key = ''
 			key += c
 		else:
 			key += c
 	blocks.append(key)
-	return blocks, data_params
+	blocks[:] = [x for x in blocks if x not in  ['', '\n']]
+	return blocks[:-1], data_params
 
 def driver(blocks, out_file, data = []):
 	stack = []
 	title_count = 0
+	nested = False
 	for content in blocks:
 		if content in KEYS:
-			# print(op)
-			stack.append(content)
+			# check for non content tags
+			if content == 'list':
+				html_list(content, out_file)
+			elif content == 'image':
+				html_image(content, "TMP", out_file)
+			elif content == 'vid':
+				html_image(content, "TMP", out_file)
+			
+			# handles implicit and explicit end
+			elif stack and content == 'end':
+				html_end(stack[0], out_file)
+				stack.pop(0)
+			elif stack and content not in NESTABLE:
+				html_end(stack[0], out_file)
+				stack.pop(0)
+				stack = [content] + stack
+			elif content in NESTABLE:
+				stack = [content] + stack
+				nested = True
+			else:
+				stack = [content] + stack
+
 		else:
-			func = stack.pop() 
-			if func == 'title':
+			# print(stack)
+			func = stack[0]
+			if func not in NESTABLE and nested:
+				print('trigger: ' + str(nested))
+				html_write(content, out_file) 
+				nested = False
+			elif func == 'title':
 				title_count += 1
 				html_title(content, out_file, title_count)
+				stack.pop(0)
 			elif func == 'par':
 				html_par(content, out_file)
-			elif func == 'image':
-				html_image(content, "TMP", out_file)
-			elif func == 'vid':
-				html_vid(content, "TMP", out_file)
 			elif func == 'code':
 				html_code(content,out_file)
-			elif func == 'list':
-				pass
 			elif func == 'item':
-				pass
-			elif func == 'end':
-				pass
+				html_item(content, out_file)
+			elif func == 'bold':
+				html_bold(content, out_file)
+			elif func == 'emph':
+				html_emph(content, out_file)
 			else:
-				print('Warning, ' + func + ' operation not found')	
+				print('Warning: ' + func + ' operation not found')	
 
 def html_title(content, out_file, id_ = 0):
 	out_file.write('<h1 id = "title' + str(id_) +'">' + re.sub('[\n]', '', content) + '</h1>\n')
 
 def html_par(content, out_file):
-	out_file.write('<p>' + content + '</p>\n')
+	out_file.write('<p>' + content)
 
 def html_image(content, name, out_file):
 	out_file.write('<img src="' + name + '">\n')
@@ -72,15 +100,37 @@ def html_image(content, name, out_file):
 def html_vid(content, name, out_file):
 	out_file.write('<video width = "250" controls><source src="' + media_path + 'videos/' + name + '" type="video/mp4"></video>]\n')
 
+def html_list(content, out_file):
+	out_file.write('<ul>\n')
+
+def html_item(content, out_file):
+	out_file.write('<li>' + content)
+
+def html_bold(content, out_file):
+	out_file.write('<b>' + content)
+
+def html_emph(content, out_file):
+	out_file.write('<i>' + content)
+
+def html_end(content, out_file):
+	out_file.write('</' + CONVERSION[content] + '>\n')
+
+def html_write(content, out_file):
+	out_file.write(content)
+
+def newline_util(content):
+	for c in content:
+		if c.replace('\n', '').replace('\t','') != '':
+			return True
+	return False
+
 def html_code(content,out_file):
-	out_file.write('<pre class="prettyprint linenums">' + content + '</pre>')
+	out_file.write('<pre class="prettyprint linenums">' + content)
+
 
 if __name__ == '__main__':
-	filename = input("enter a .book file name  ==> ")
-	file = open(filename, "r").read()
-	# file.replace('\n','')
-	# file.replace('\r','')
-	data = re.sub('[\r]', '', file)
-	control = parse(data)
-	#print(control)
-	# driver(control)
+	# filename = input("enter a .book file name  ==> ")
+	# file = open(filename, "r").read()
+	# data = re.sub('[\r]', '', file)
+	# control, args = parse(data)
+	print(str(newline_util('\n\t')))

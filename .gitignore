@@ -6,3 +6,5 @@
 
 #text
 *.txt
+
+__pycache__/

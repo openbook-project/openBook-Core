@@ -30,6 +30,7 @@ if __name__ == "__main__":
 	init_css += c_select
 
 	end_html = "</div>\n</div>\n</body>\n</html>"
+
 	output.write(init_html)
 	outcss.write(init_css)
 
@@ -43,6 +44,7 @@ if __name__ == "__main__":
 	output.close()
 	content = parser.parse(file)
 
+	# print(content[0])
 	output = open('output.html', 'a')
 
 	parser.driver(content[0], output)
