@@ -36,7 +36,7 @@ if __name__ == "__main__":
 	button = "button{background-color: #9c85a4;border: none;color: white;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;}"
 	init_css += c_select + drag_def + button
 
-	end_html = "<br><br><br></div>\n</div>\n</body>\n</html>"
+	end_html = "<br><br><iframe style='width:750px; height:1000px;' src=\"http://192.168.56.111/index.php?semester=s19&course=sample&component=student&gradeable_id=grades_released_homework_autohiddenEC\"></iframe><br><br><br></div>\n</div>\n</body>\n</html>"
 
 	output.write(init_html)
 	outcss.write(init_css)
