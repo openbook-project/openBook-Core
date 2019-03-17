@@ -1,10 +1,10 @@
 import re
 import os
 
-KEYS = ['title', 'emph', 'bold','par', 'image', 'vid', 'code', 'list', 'item', 'end', 'big', 'def']
+KEYS = ['title', 'emph', 'bold','par', 'image', 'vid', 'code', 'list', 'item', 'end', 'big', 'def', 'editor']
 NESTABLE = ['emph', 'bold', 'list', 'code']
-CONVERSION = {'title' : 'h1', 'emph' : 'i', 'bold' : 'b', 'big': 'h2','par' : 'p', 'list' : 'ul', 'item' : 'li', 'code' : 'pre', 'def' : 'div'}
-media_path = "/media/"
+CONVERSION = {'title' : 'h1', 'emph' : 'i', 'bold' : 'b', 'big': 'h2','par' : 'p', 'list' : 'ul', 'item' : 'li', 'code' : 'pre', 'def' : 'div', 'editor' : 'div'}
+media_path = "media/"
 
 def parse(str):
 	key = ''
@@ -38,7 +38,7 @@ def parse(str):
 
 def driver(blocks, out_file, data = []):
 	stack = []
-	title_count = def_count = 0
+	title_count = def_count = editor_count = 0
 	nested = False
 	end_flag = True
 	for content in blocks:
@@ -104,6 +104,9 @@ def driver(blocks, out_file, data = []):
 			elif func == 'def':
 				def_count += 1
 				html_def(content,data[0], def_count, out_file)
+			elif func == 'editor':
+				editor_count += 1
+				html_editor(content, editor_count, out_file)
 			else:
 				print('Warning: ' + func + ' operation not found')	
 
@@ -114,7 +117,7 @@ def html_par(content, out_file):
 	out_file.write('<p>' + content)
 
 def html_image(content, name, out_file):
-	out_file.write('<img src="' + media_path + "images/" + name + '">\n')
+	out_file.write('<img src="' "media/images/" + name + '">\n')
 
 def html_vid(content, name, out_file):
 	out_file.write('<video width = "250" controls><source src="' + media_path + 'videos/' + name + '" type="video/mp4"></video>]\n')
@@ -142,6 +145,9 @@ def html_write(content, out_file):
 
 def html_def(content, data, count, out_file):
 	out_file.write('<div class="def" id="def' + str(count) + '"><div id="def' + str(count) + 'header"><h2>' + data + '</h2></div><p>' + content + '</p>')
+
+def html_editor(content, editor_count, out_file):
+	out_file.write('<div class="edit" style=\'border:solid 1px black;\' id=\'code_edit\' '+ str(editor_count) +'>')
 
 def newline_util(content):
 	for c in content:
