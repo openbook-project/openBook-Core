@@ -65,6 +65,9 @@ def html_image(content, name, out_file):
 def html_vid(content, name, out_file):
 	out_file.write('<video width = "250" controls><source src="' + media_path + 'videos/' + name + '" type="video/mp4"></video>')
 
+def html_code(content,out_file):
+	out_file.write('<pre class="prettyprint>' + content + '</pre>')
+
 if __name__ == '__main__':
 	filename = input("enter a .book file name  ==> ")
 	file = open(filename, "r").read()
