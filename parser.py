@@ -109,7 +109,7 @@ def html_par(content, out_file):
 	out_file.write('<p>' + content)
 
 def html_image(content, name, out_file):
-	out_file.write('<img src="' + media_path + "/images/" + name + '">\n')
+	out_file.write('<img src="' + media_path + "images/" + name + '">\n')
 
 def html_vid(content, name, out_file):
 	out_file.write('<video width = "250" controls><source src="' + media_path + 'videos/' + name + '" type="video/mp4"></video>]\n')
