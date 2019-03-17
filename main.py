@@ -45,7 +45,7 @@ if __name__ == "__main__":
 	output.close()
 	content, media = parser.parse(file)
 
-	print(content)
+	#print(content)
 	# print(media)
 	output = open('output.html', 'a')
 
