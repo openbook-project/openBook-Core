@@ -77,9 +77,21 @@
 		#item# The expression #bold# a[0] #end# gets a reference to the memory location associated with string location as an #emph# l-value #end#.
 		#item# The assignent operator stores the value in the referenced memory location.
 	#end#
+
+	#item# The difference between an #emph# r-value #end# and an #emph# l-value #end# will be especially signficant to get operators later in the semester
+
+	#item# What's wrong with the code?
+	#code#
+		std::string foo = 'hello';
+		foo[2] = 'X';
+		cout << foo;
+		'X' = foo[3];
+		cout << foo;
+	#end#
+	Your C++ compiler will complain with something like: "#bold# non-lvalue in assignment #end#"
 #end#
 
-#image[recursion_stack.png]#
+#image[rec_stack.png]#
 
 #title# test implicit end
 

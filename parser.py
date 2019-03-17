@@ -40,16 +40,18 @@ def driver(blocks, out_file, data = []):
 	stack = []
 	title_count = def_count = 0
 	nested = False
+	end_flag = True
 	for content in blocks:
 		if content in KEYS:
 			# handles implicit and explicit end
 			if stack and content == 'end':
 				# print('ending op: ' + stack[0])
-				if stack[0] == 'item' and stack[1] == 'list':
+				if stack[0] == 'item' and stack[1] == 'list' and end_flag:
 					html_end(stack[0], out_file)
 					stack.pop(0)
 				html_end(stack[0], out_file)
 				stack.pop(0)
+				end_flag = True
 			elif content == 'list':
 				if stack:
 					nested = False
@@ -90,6 +92,7 @@ def driver(blocks, out_file, data = []):
 				html_par(content, out_file)
 			elif func == 'code':
 				html_code(content,out_file)
+				end_flag = False
 			elif func == 'item':
 				html_item(content, out_file)
 			elif func == 'bold':
