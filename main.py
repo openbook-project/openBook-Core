@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
 	output = open('output.html', 'a')
 
-	parser.driver(content, output)
+	parser.driver(content[0], output)
 	output.write(end_html)
 
 	init_js = "<script></script>"

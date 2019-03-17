@@ -29,7 +29,6 @@ def parse(str):
 		else:
 			key += c
 	blocks.append(key)
-	print(data_params)
 	return blocks, data_params
 
 def driver(blocks, out_file, data = []):
@@ -49,7 +48,7 @@ def driver(blocks, out_file, data = []):
 			elif func == 'vid':
 				html_vid(content, "TMP", out_file)
 			elif func == 'code':
-				pass
+				html_code(content,out_file)
 			elif func == 'list':
 				pass
 			elif func == 'item':
@@ -72,7 +71,7 @@ def html_vid(content, name, out_file):
 	out_file.write('<video width = "250" controls><source src="' + media_path + 'videos/' + name + '" type="video/mp4"></video>]\n')
 
 def html_code(content,out_file):
-	out_file.write('<pre class="prettyprint>' + content + '</pre>')
+	out_file.write('<pre class="prettyprint linenums">' + content + '</pre>')
 
 if __name__ == '__main__':
 	filename = input("enter a .book file name  ==> ")
