@@ -4,7 +4,7 @@ import os
 KEYS = ['title', 'emph', 'bold','par', 'image', 'vid', 'code', 'list', 'item', 'end', 'big', 'def']
 NESTABLE = ['emph', 'bold', 'list', 'code']
 CONVERSION = {'title' : 'h1', 'emph' : 'i', 'bold' : 'b', 'big': 'h2','par' : 'p', 'list' : 'ul', 'item' : 'li', 'code' : 'pre', 'def' : 'div'}
-media_path = "/media/"
+media_path = "media/"
 
 def parse(str):
 	key = ''
@@ -111,7 +111,7 @@ def html_par(content, out_file):
 	out_file.write('<p>' + content)
 
 def html_image(content, name, out_file):
-	out_file.write('<img src="' + media_path + "images/" + name + '">\n')
+	out_file.write('<img src="' "media/images/" + name + '">\n')
 
 def html_vid(content, name, out_file):
 	out_file.write('<video width = "250" controls><source src="' + media_path + 'videos/' + name + '" type="video/mp4"></video>]\n')

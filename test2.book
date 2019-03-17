@@ -79,7 +79,7 @@
 	#end#
 #end#
 
-#image[recursion_stack.png]#
+#image[rec_stack.png]#
 
 #title# test implicit end
 
