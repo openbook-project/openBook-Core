@@ -3,8 +3,10 @@ import os
 
 KEYS = ['title', 'emph', 'bold','par', 'image', 'vid', 'code', 'list', 'item', 'end']
 NESTABLE = ['emph', 'bold']
-CONVERSION = {'title' : 'h1', 'emph' : 'i', 'bold' : 'b', 'par' : 'p', 'list' : 'ul', 'item' : 'li'}
+CONVERSION = {'title' : 'h1', 'emph' : 'i', 'bold' : 'b', 'par' : 'p', 'list' : 'ul', 'item' : 'li', 'code' : 'pre'}
 media_path = os.getcwd() + "/media/"
+
+title_count = 0
 
 def parse(str):
 	key = ''
@@ -64,7 +66,7 @@ def driver(blocks, out_file, data = []):
 				stack = [content] + stack
 
 		else:
-			print(stack)
+			# print(stack)
 			func = stack[0]
 			if func not in NESTABLE and nested:
 				print('trigger: ' + str(nested))
@@ -76,7 +78,7 @@ def driver(blocks, out_file, data = []):
 			elif func == 'par':
 				html_par(content, out_file)
 			elif func == 'code':
-				pass
+				html_code(content,out_file)
 			elif func == 'item':
 				html_item(content, out_file)
 			elif func == 'bold':
@@ -121,6 +123,10 @@ def newline_util(content):
 		if c.replace('\n', '').replace('\t','') != '':
 			return True
 	return False
+
+def html_code(content,out_file):
+	out_file.write('<pre class="prettyprint linenums">' + content)
+
 
 if __name__ == '__main__':
 	# filename = input("enter a .book file name  ==> ")
