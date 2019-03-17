@@ -6,8 +6,6 @@ NESTABLE = ['emph', 'bold']
 CONVERSION = {'title' : 'h1', 'emph' : 'i', 'bold' : 'b', 'par' : 'p', 'list' : 'ul', 'item' : 'li', 'code' : 'pre'}
 media_path = os.getcwd() + "/media/"
 
-title_count = 0
-
 def parse(str):
 	key = ''
 	op = ''
@@ -40,6 +38,7 @@ def parse(str):
 
 def driver(blocks, out_file, data = []):
 	stack = []
+	title_count = 0
 	nested = False
 	for content in blocks:
 		if content in KEYS:
@@ -76,7 +75,8 @@ def driver(blocks, out_file, data = []):
 				html_write(content, out_file) 
 				nested = False
 			elif func == 'title':
-				html_title(content, out_file)
+				title_count += 1
+				html_title(content, out_file, title_count)
 				stack.pop(0)
 			elif func == 'par':
 				html_par(content, out_file)
@@ -91,8 +91,8 @@ def driver(blocks, out_file, data = []):
 			else:
 				print('Warning: ' + func + ' operation not found')	
 
-def html_title(content, out_file):
-	out_file.write('<h1>' + re.sub('[\n]', '', content) + '</h1>\n')
+def html_title(content, out_file, id_ = 0):
+	out_file.write('<h1 id = "title' + str(id_) +'">' + re.sub('[\n]', '', content) + '</h1>\n')
 
 def html_par(content, out_file):
 	out_file.write('<p>' + content)
