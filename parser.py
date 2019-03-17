@@ -1,9 +1,9 @@
 import re
 import os
 
-KEYS = ['title', 'emph', 'bold','par', 'image', 'vid', 'code', 'list', 'item', 'end']
+KEYS = ['title', 'emph', 'bold','par', 'image', 'vid', 'code', 'list', 'item', 'end', 'def']
 NESTABLE = ['emph', 'bold']
-CONVERSION = {'title' : 'h1', 'emph' : 'i', 'bold' : 'b', 'par' : 'p', 'list' : 'ul', 'item' : 'li', 'code' : 'pre'}
+CONVERSION = {'title' : 'h1', 'emph' : 'i', 'bold' : 'b', 'par' : 'p', 'list' : 'ul', 'item' : 'li', 'code' : 'pre', 'def' : 'div'}
 media_path = "media/"
 
 def parse(str):
@@ -38,7 +38,7 @@ def parse(str):
 
 def driver(blocks, out_file, data = []):
 	stack = []
-	title_count = 0
+	title_count = def_count = 0
 	nested = False
 	for content in blocks:
 		if content in KEYS:
@@ -69,7 +69,7 @@ def driver(blocks, out_file, data = []):
 				stack = [content] + stack
 
 		else:
-			# print(stack)
+			print(stack)
 			func = stack[0]
 			if func not in NESTABLE and nested:
 				html_write(content, out_file) 
@@ -88,6 +88,9 @@ def driver(blocks, out_file, data = []):
 				html_bold(content, out_file)
 			elif func == 'emph':
 				html_emph(content, out_file)
+			elif func == 'def':
+				def_count += 1
+				html_def(content,data[0], def_count, out_file)
 			else:
 				print('Warning: ' + func + ' operation not found')	
 
@@ -121,6 +124,9 @@ def html_end(content, out_file):
 def html_write(content, out_file):
 	out_file.write(content)
 
+def html_def(content, data, count, out_file):
+	out_file.write('<div class="def" id="def' + str(count) + '"><div id="def' + str(count) + 'header"><h2>' + data + '</h2></div><p>' + content + '</p>')
+
 def newline_util(content):
 	for c in content:
 		if c.replace('\n', '').replace('\t','') != '':
@@ -129,6 +135,13 @@ def newline_util(content):
 
 def html_code(content,out_file):
 	out_file.write('<pre class="prettyprint linenums">' + content)
+
+def post_process(file, def_string, def_index, out_file):
+	file = file.replace(def_string, "<a href='#' onclick='hideMe(\"def" + str(def_index) + "\"); return false;'> " + def_string + "</a>")
+	name = out_file.name
+	out_file.close()
+	out_file = open(name, "w")
+	out_file.write(file)
 
 
 if __name__ == '__main__':
