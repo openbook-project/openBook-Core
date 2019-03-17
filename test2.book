@@ -1,15 +1,83 @@
 #title# CSCI - 1200 Data Structures -- Fall 2018
 #title# Lecture 2 -- STL Strings & Vectors
 
-#par# #bold# Announcements #end#
+#big# #bold# Announcements #end#
 
 #list#
 	#item# HW 1 is available online through the website on the "Calendar"
 	#item# Be sure to read through the information as you start implementation of HW1
 	#item# TA & instructor office hours are posted on website "Weekly Schedule"
-	#item# PLease use #bold# TA #end# #emph# office hours #end# and your lab time tomorrow to osort out any remaining installation problems with C++ enviornment on your laptop
+	#item# Please use #bold# TA #end# #emph# office hours #end# and your lab time tomorrow to osort out any remaining installation problems with C++ enviornment on your laptop
 #end#
 
+#big# #bold# Today #end#
+#list#
+	#item# Finish Lecture 1
+	#item# STL Strings, char arrays(C-style Strings), & converting between these two types
+	#item# L-values vs R-values
+	#item# STL Vectors as "smart arrays"
+#end#
+
+#big# #bold# 2.1 String Concatenation and Creation of Temporary String Object #end#
+#list#
+	#item# The following statement creates a new string by "adding"
+	#code# 
+		std::string my_line = "*" + std::string(first.size()+2,' ') + "*";
+	#end#
+	#item# The expression #bold# std::string(first.size()+2, ' ') #end# within this statement creates a temporary STL string but does not associate it with a variable.
+#end#
+
+#big# #bold# 2.2 Character Arrays and String Literals #end#
+#list#
+	#item# In the line below "Hello!" is a #emph# string literal #end# and it is also an array of characters (with no associated variable name).
+	#code#
+		cout << "Hello!" << endl;
+	#end#
+	#item# As char array can be initialized as:
+	#code#
+		char h[] = {'H', 'e', 'l', 'l', 'o', '!', '\0'};
+	#end#
+	or as
+	#code#
+		char h[] = "Hello!";
+	#end#
+	In either case, arrah h has 7 characters, the last one being the null character
+	#item# The C language provides many functions for manipulating these "C-style strings". We don't study them much anymore because the "C++" STL string library is much more logical and easier to use.
+	#item# One place we do use them is in file names and command-line arguments, which you will use in Homework 1.
+#end#
+
+#big# #bold# Converesion Between Standard Strings and C-Style String Literals #end#
+#list#
+	#item# We regularly conver/cast between C-style & C++-style (STL) strings. For example:
+	#code#
+		std::string s1("Hello!");
+		std::string s2(h);
+	#end#
+	where h is defined above
+
+	#item# You can obtain the C-style string from a standard string using the member funcion #bold# c_str #end#, as in #bold# s1.c_str() #end#
+#end#
+
+#big# #bold# L-Values and R-Values #end#
+#list#
+	#item# Consider the simple code below. String #bold# a #end# becomes #bold# "Tom" #end#. No big deal, right?
+	#code#
+		std::string a = "Kim";
+		std::string b = "Tom";
+		a[0] = b[0];
+	#end#
+
+	#item# Let's look more closely at the line: #bold# a[0] = b[0]; #end# and think about what happens.
+
+	In particular, what is the difference between the use of #bold# a[0] #end# on the left hand side and b[0] on the right hand side?
+
+	#item# Syntactically, they look the same. But,
+	#list#
+		#item# The expression #bold# b[0] #end# gets the cahr value, 'T' from the string location 0 in b. This is an #emph# r-value #end#.
+		#item# The expression #bold# a[0] #end# gets a reference to the memory location associated with string location as an #emph# l-value #end#.
+		#item# The assignent operator stores the value in the referenced memory location.
+	#end#
+#end#
 
 #image[recursion_stack.png]#
 

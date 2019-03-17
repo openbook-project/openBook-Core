@@ -1,9 +1,10 @@
 import re
 import os
 
-KEYS = ['title', 'emph', 'bold','par', 'image', 'vid', 'code', 'list', 'item', 'end']
-NESTABLE = ['emph', 'bold']
-CONVERSION = {'title' : 'h1', 'emph' : 'i', 'bold' : 'b', 'par' : 'p', 'list' : 'ul', 'item' : 'li', 'code' : 'pre'}
+KEYS = ['title', 'emph', 'bold','par', 'image', 'vid', 'code', 'list', 'item', 'end', 
+'big']
+NESTABLE = ['emph', 'bold', 'list', 'code']
+CONVERSION = {'title' : 'h1', 'emph' : 'i', 'bold' : 'b', 'big': 'h2','par' : 'p', 'list' : 'ul', 'item' : 'li', 'code' : 'pre'}
 media_path = os.getcwd() + "/media/"
 
 def parse(str):
@@ -42,12 +43,22 @@ def driver(blocks, out_file, data = []):
 	nested = False
 	for content in blocks:
 		if content in KEYS:
-			
 			# handles implicit and explicit end
 			if stack and content == 'end':
+				# print('ending op: ' + stack[0])
+				if stack[0] == 'item' and stack[1] == 'list':
+					html_end(stack[0], out_file)
+					stack.pop(0)
 				html_end(stack[0], out_file)
 				stack.pop(0)
-			elif stack and content not in NESTABLE:
+			elif content == 'list':
+				if stack:
+					nested = False
+					html_end(stack[0], out_file)
+					stack.pop(0)
+				html_list(content, out_file)
+				stack = [content] + stack
+			elif stack and content not in NESTABLE and stack[0] not in NESTABLE:
 				html_end(stack[0], out_file)
 				stack.pop(0)
 				stack = [content] + stack
@@ -56,8 +67,6 @@ def driver(blocks, out_file, data = []):
 				nested = True
 
 			# check for non content tags
-			elif content == 'list':
-				html_list(content, out_file)
 			elif content == 'image':
 				html_image(content, data[0], out_file)
 				data.pop(0)
@@ -69,7 +78,7 @@ def driver(blocks, out_file, data = []):
 				stack = [content] + stack
 
 		else:
-			# print(stack)
+			#print(stack)
 			func = stack[0]
 			if func not in NESTABLE and nested:
 				html_write(content, out_file) 
@@ -86,6 +95,8 @@ def driver(blocks, out_file, data = []):
 				html_item(content, out_file)
 			elif func == 'bold':
 				html_bold(content, out_file)
+			elif func == 'big':
+				html_big(content, out_file)
 			elif func == 'emph':
 				html_emph(content, out_file)
 			else:
@@ -115,6 +126,9 @@ def html_bold(content, out_file):
 def html_emph(content, out_file):
 	out_file.write('<i>' + content)
 
+def html_big(content, out_file):
+	out_file.write('<h2>' + content)
+
 def html_end(content, out_file):
 	out_file.write('</' + CONVERSION[content] + '>\n')
 
@@ -128,7 +142,8 @@ def newline_util(content):
 	return False
 
 def html_code(content,out_file):
-	out_file.write('<pre class="prettyprint linenums">' + content)
+	leading = re.match(r"\s*", content).group()
+	out_file.write('<pre class="prettyprint linenums">' + content.replace(leading,'\n'))
 
 
 if __name__ == '__main__':
