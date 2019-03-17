@@ -147,7 +147,7 @@ def html_def(content, data, count, out_file):
 	out_file.write('<div class="def" id="def' + str(count) + '"><div id="def' + str(count) + 'header"><h2>' + data + '</h2></div><p>' + content + '</p>')
 
 def html_editor(content, editor_count, out_file):
-	out_file.write('<div class="edit" style=\'border:solid 1px black;\' id=\'code_edit\' '+ str(editor_count) +'>')
+	out_file.write('<button onclick="download(\'download\', getText(' + str(editor_count-1) +'))" \'>Download</button><div class="edit" style=\'border:solid 1px black;\' id=\'code_edit\' '+ str(editor_count) +'>')
 
 def newline_util(content):
 	for c in content:

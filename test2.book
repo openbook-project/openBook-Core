@@ -58,6 +58,20 @@
 	#item# You can obtain the C-style string from a standard string using the member funcion #bold# c_str #end#, as in #bold# s1.c_str() #end#
 #end#
 
+#par# Sample Proof$$
+	\begin{align}
+		T(0)    &= \frac{0\cdot (0+1)}{2} = 0      && \text{Basis Step}\\
+		T(k)    &= \frac{k\cdot (k+1)}{2}          && \text{Inductive Hypothesis} \\
+		T(k+1)  &= \frac{(k+1)(k+2)}{2}            && \text{Inductive Step} \\
+			&= T(k) + k + 1	 	           && \text{From Lemma 1}\\
+			&= \frac{k \cdot (k+1)}{2} + k+1   && \text{From I.H}\\ 
+			&= \frac{k \cdot (k+1)}{2} + \frac{2(k+1)}{2} \\
+			&= \frac{k^2 + k + 2k + 2}{2} \\
+			&= \frac{k^2 + 3k + 2}{2} \\
+			&= \frac{(k+1)(k+2)}{2}
+	\end{align}
+$$
+
 #big# #bold# L-Values and R-Values #end#
 #list#
 	#item# Consider the simple code below. String #bold# a #end# becomes #bold# "Tom" #end#. No big deal, right?

@@ -5,3 +5,5 @@
 *.txt
 
 __pycache__/
+
+output.css
