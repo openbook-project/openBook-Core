@@ -42,12 +42,13 @@ if __name__ == "__main__":
 		os.mkdir(path + "/videos")
 
 	output.close()
-	content = parser.parse(file)
+	content, media = parser.parse(file)
 
-	# print(content[0])
+	# print(content)
+	# print(media)
 	output = open('output.html', 'a')
 
-	parser.driver(content[0], output)
+	parser.driver(content, output, media)
 	output.write(end_html)
 
 	init_js = "<script></script>"

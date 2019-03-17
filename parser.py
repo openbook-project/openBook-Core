@@ -43,16 +43,9 @@ def driver(blocks, out_file, data = []):
 	nested = False
 	for content in blocks:
 		if content in KEYS:
-			# check for non content tags
-			if content == 'list':
-				html_list(content, out_file)
-			elif content == 'image':
-				html_image(content, "TMP", out_file)
-			elif content == 'vid':
-				html_image(content, "TMP", out_file)
 			
 			# handles implicit and explicit end
-			elif stack and content == 'end':
+			if stack and content == 'end':
 				html_end(stack[0], out_file)
 				stack.pop(0)
 			elif stack and content not in NESTABLE:
@@ -62,6 +55,17 @@ def driver(blocks, out_file, data = []):
 			elif content in NESTABLE:
 				stack = [content] + stack
 				nested = True
+
+			# check for non content tags
+			elif content == 'list':
+				html_list(content, out_file)
+			elif content == 'image':
+				html_image(content, data[0], out_file)
+				data.pop(0)
+			elif content == 'vid':
+				html_image(content, "TMP", out_file)
+
+			# base case
 			else:
 				stack = [content] + stack
 
@@ -69,7 +73,6 @@ def driver(blocks, out_file, data = []):
 			# print(stack)
 			func = stack[0]
 			if func not in NESTABLE and nested:
-				print('trigger: ' + str(nested))
 				html_write(content, out_file) 
 				nested = False
 			elif func == 'title':
@@ -95,7 +98,7 @@ def html_par(content, out_file):
 	out_file.write('<p>' + content)
 
 def html_image(content, name, out_file):
-	out_file.write('<img src="' + name + '">\n')
+	out_file.write('<img src="' + media_path + "/images/" + name + '">\n')
 
 def html_vid(content, name, out_file):
 	out_file.write('<video width = "250" controls><source src="' + media_path + 'videos/' + name + '" type="video/mp4"></video>]\n')
