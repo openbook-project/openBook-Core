@@ -4,6 +4,8 @@ import os
 KEYS = ['title', 'emph', 'bold','par', 'image', 'vid', 'code', 'list', 'item', 'end']
 media_path = os.getcwd() + "/media/"
 
+title_count = 0
+
 def parse(str):
 	key = ''
 	op = ''
