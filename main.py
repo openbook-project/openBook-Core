@@ -11,7 +11,7 @@ if __name__ == "__main__":
 	file.replace("\r","")
 
 	output = open(filename + ".html", "w")
-	outcss = open("output.css", "w")
+	outcss = open(filename + ".css", "w")
 
 	title_count = len(re.findall(".*#title#", file))
 	navbar = "Chapter Select: <select onchange='jump_section()'id='chapter_select'>"
@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
 	latex_settings = '<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [[\'$$\',\'$$\'], [\'\\(\',\'\\)\']]}});</script>'
 
-	init_html = "<!DOCTYPE html>\n<html>\n<head>" + latex  + code_mirror + "<title>" + filename + "</title>\n<script src='https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=sunburst'>\n</script>\n<link rel='stylesheet' href='output.css'>\n</head>\n<body>\n<div id='navbar'>" + book_name + navbar + "</div><div class='container'>\n<div id='content'>"
+	init_html = "<!DOCTYPE html>\n<html>\n<head>" + latex  + code_mirror + "<title>" + filename + "</title>\n<script src='https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=sunburst'>\n</script>\n<link rel='stylesheet' href='" + filename + ".css'>\n</head>\n<body>\n<div id='navbar'>" + book_name + navbar + "</div><div class='container'>\n<div id='content'>"
 	init_css = open("css_file.css").read()
 
 	end_html = "<br><br><br></div>\n</div>\n</body>\n</html>"
@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
 	#print(content)
 	# print(media)
-	output = open('output.html', 'a')
+	output = open(filename + '.html', 'a')
 
 	parser.driver(content, output, media)
 	output.write(end_html)

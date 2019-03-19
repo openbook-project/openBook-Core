@@ -4,6 +4,15 @@ h1,body{
 	margin: 0px;
 	padding:0px;
 }
+button{
+	background-color: #9c85a4;
+	border: none;color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+}
 .container{
 	margin-top:65px;
 	display: flex;
@@ -22,5 +31,11 @@ h1,body{
 	border-bottom:solid 1px black;
 	padding:10px;
 	background-color:white;
-}#chapter_select{}
-.def{position:absolute;background-color:white;border:solid 1px black; padding-left:10px;padding-right : 10px;}button{background-color: #9c85a4;border: none;color: white;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;}
+}
+.def{
+	position:absolute;
+	background-color:white;
+	border:solid 1px black; 
+	padding-left:10px;
+	padding-right : 10px;
+}
