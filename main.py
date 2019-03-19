@@ -10,7 +10,7 @@ if __name__ == "__main__":
 	file.replace("\n","")
 	file.replace("\r","")
 
-	output = open("output.html", "w")
+	output = open(filename + ".html", "w")
 	outcss = open("output.css", "w")
 
 	title_count = len(re.findall(".*#title#", file))
@@ -29,14 +29,9 @@ if __name__ == "__main__":
 	latex_settings = '<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [[\'$$\',\'$$\'], [\'\\(\',\'\\)\']]}});</script>'
 
 	init_html = "<!DOCTYPE html>\n<html>\n<head>" + latex  + code_mirror + "<title>" + filename + "</title>\n<script src='https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=sunburst'>\n</script>\n<link rel='stylesheet' href='output.css'>\n</head>\n<body>\n<div id='navbar'>" + book_name + navbar + "</div><div class='container'>\n<div id='content'>"
-	init_css = "html{font-family: Arial, Helvetica, sans-serif;line-height: 1.5;}\nh1,body{margin: 0px;padding:0 px;}\n.container{margin-top:65px;display: flex;flex-direction: column ;justify-content: center;align-items: center;}\n#content{max-width: 50%;}\n#navbar{position:fixed;width:100%;height:25px;top:0px;border-bottom:solid 1px black;padding:10px;background-color:white;}\n"
+	init_css = open("css_file.css").read()
 
-	c_select = "#chapter_select{}\n"
-	drag_def = ".def{position:absolute;background-color:white;border:solid 1px black; padding-left:10px;padding-right : 10px;}"
-	button = "button{background-color: #9c85a4;border: none;color: white;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;}"
-	init_css += c_select + drag_def + button
-
-	end_html = "<br><br><iframe style='width:750px; height:1000px;' src=\"http://192.168.56.111/index.php?semester=s19&course=sample&component=student&gradeable_id=grades_released_homework_autohiddenEC\"></iframe><br><br><br></div>\n</div>\n</body>\n</html>"
+	end_html = "<br><br><br></div>\n</div>\n</body>\n</html>"
 
 	output.write(init_html)
 	outcss.write(init_css)
@@ -65,8 +60,4 @@ if __name__ == "__main__":
 	output.write(init_js + downloadjs)
 
 	output.close()
-
-	#fin_file = open('output.html', 'r+')
-	#parser.post_process(fin_file.read(), "recursion", 1, fin_file)
-
 	outcss.close()
