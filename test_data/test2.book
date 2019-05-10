@@ -1,8 +1,9 @@
 #title# CSCI - 1200 Data Structures -- Fall 2018
 #title# Lecture 2 -- STL Strings & Vectors
 
-#big# #bold# Announcements #end#
+#big# #bold# Announcements #end# #end#
 
+#big# #bold# #emph# test #end#
 #list#
 	#item# HW 1 is available online through the website on the "Calendar"
 	#item# Be sure to read through the information as you start implementation of HW1
@@ -104,8 +105,6 @@ $$
 	#end#
 	Your C++ compiler will complain with something like: "#bold# non-lvalue in assignment #end#"
 #end#
-
-#image[rec_stack.png]#
 
 #title# test implicit end
 
