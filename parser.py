@@ -1,175 +1,84 @@
-import re
-import os
+import util
+import htmlwriter
 
-KEYS = ['title', 'emph', 'bold','par', 'image', 'vid', 'code', 'list', 'item', 'end', 'big', 'def', 'editor']
-NESTABLE = ['emph', 'bold', 'list', 'code']
-CONVERSION = {'title' : 'h1', 'emph' : 'i', 'bold' : 'b', 'big': 'h2','par' : 'p', 'list' : 'ul', 'item' : 'li', 'code' : 'pre', 'def' : 'div', 'editor' : 'div'}
-media_path = "media/"
+keys = {'title' : htmlwriter.writeTitle,
+		'par' : htmlwriter.writePar,
+		'item': htmlwriter.listItem
+		}
 
-def parse(str):
-	key = ''
-	op = ''
-	blocks = []
-	data_params = []
+nestable = {'big' : htmlwriter.startBig,
+			'big_end' : htmlwriter.endBig,
+			'list' : htmlwriter.startList,
+			'end_list' : htmlwriter.endList
+			}
 
-	for c in str:
-		# end a delimiter
-		if c == '#' and '#' in key:
-			op = re.sub('[#]', '', key)
-			source = re.search('\[(.*?)\]', key)
-			if source != None:
-				data_params.append(source.group(1))	
-				blocks.append(op.replace('[' + source.group(1) + ']', ''))
-			else:
-				blocks.append(op)
-			key = ''
-		
-		# start a delimiter 
-		elif c == '#':
-			if newline_util(key) and op != '':
-				blocks.append(key)
-			key = ''
-			key += c
-		else:
-			key += c
-	blocks.append(key)
-	blocks[:] = [x for x in blocks if x not in  ['', '\n']]
-	return blocks[:-1], data_params
-
-def driver(blocks, out_file, data = []):
+def write(html_file, tokens):
 	stack = []
-	title_count = def_count = editor_count = 0
-	nested = False
-	end_flag = True
-	for content in blocks:
-		if content in KEYS:
-			# handles implicit and explicit end
-			if stack and content == 'end':
-				# print('ending op: ' + stack[0])
-				if stack[0] == 'item' and stack[1] == 'list' and end_flag:
-					html_end(stack[0], out_file)
-					stack.pop(0)
-				html_end(stack[0], out_file)
-				stack.pop(0)
-				end_flag = True
-			elif content == 'list':
-				if stack:
-					nested = False
-					html_end(stack[0], out_file)
-					stack.pop(0)
-				html_list(content, out_file)
-				stack = [content] + stack
-			elif stack and content not in NESTABLE and stack[0] not in NESTABLE:
-				html_end(stack[0], out_file)
-				stack.pop(0)
-				stack = [content] + stack
-			elif content in NESTABLE:
-				stack = [content] + stack
-				nested = True
+	for t in tokens:
+		tag = list(t.keys())[0]
+		content = t[tag]
+		if tag in keys:
+			html_file.write(keys[tag](content))
+		elif tag in nestable:
+			html_file.write(nestable[tag](content))
+			stack.append(tag)
+		elif tag == "end":
+			if len(stack) > 0:
+				func = stack.pop() + "_end"
+				if func in nestable:
+					html_file.write(nestable[func]())
+			
 
-			# check for non content tags
-			elif content == 'image':
-				html_image(content, data[0], out_file)
-				data.pop(0)
-			elif content == 'vid':
-				html_image(content, "TMP", out_file)
+#first tokenize the file
+def parse(html_file, source_file):
+	ret = []
 
-			# base case
-			else:
-				stack = [content] + stack
+	buff = ""
+	token = ""
+	last_token = ""
+	outside_token = True
+	prev_char = ""
 
-		else:
-			#print(stack)
-			func = stack[0]
-			if func not in NESTABLE and nested:
-				html_write(content, out_file) 
-				nested = False
-			elif func == 'title':
-				title_count += 1
-				html_title(content, out_file, title_count)
-				stack.pop(0)
-			elif func == 'par':
-				html_par(content, out_file)
-			elif func == 'code':
-				html_code(content,out_file)
-				end_flag = False
-			elif func == 'item':
-				html_item(content, out_file)
-			elif func == 'bold':
-				html_bold(content, out_file)
-			elif func == 'big':
-				html_big(content, out_file)
-			elif func == 'emph':
-				html_emph(content, out_file)
-			elif func == 'def':
-				def_count += 1
-				html_def(content,data[0], def_count, out_file)
-			elif func == 'editor':
-				editor_count += 1
-				html_editor(content, editor_count, out_file)
-			else:
-				print('Warning: ' + func + ' operation not found')	
+	for line in source_file:
+		for ch in line:
+			if ch == '\n' or ch == '\r':
+				continue
 
-def html_title(content, out_file, id_ = 0):
-	out_file.write('<h1 id = "title' + str(id_) +'">' + re.sub('[\n]', '', content) + '</h1>\n')
+			if ch != '#' or (ch == '#' and prev_char == "\\"):
+				if not outside_token:
+					token += ch
+				else:
+					buff += ch
 
-def html_par(content, out_file):
-	out_file.write('<p>' + content)
+			if ch == '#' and prev_char != "\\":
+				#now going inside the token, add the buffer to the last token
+				if outside_token:
+					if buff != "" or last_token != "":
+						buff = buff.strip()
+						ret.append({last_token : buff})
+					buff = ""
+				#now going outside the token, save the token
+				else:
+					last_token = token
+					last_token = last_token.strip('#')
+					last_token = last_token.strip()
+					token = ""
+				outside_token = not outside_token
 
-def html_image(content, name, out_file):
-	out_file.write('<img src="' "media/images/" + name + '">\n')
-
-def html_vid(content, name, out_file):
-	out_file.write('<video width = "250" controls><source src="' + media_path + 'videos/' + name + '" type="video/mp4"></video>]\n')
-
-def html_list(content, out_file):
-	out_file.write('<ul>\n')
-
-def html_item(content, out_file):
-	out_file.write('<li>' + content)
-
-def html_bold(content, out_file):
-	out_file.write('<b>' + content)
-
-def html_emph(content, out_file):
-	out_file.write('<i>' + content)
-
-def html_big(content, out_file):
-	out_file.write('<h2>' + content)
-
-def html_end(content, out_file):
-	out_file.write('</' + CONVERSION[content] + '>\n')
-
-def html_write(content, out_file):
-	out_file.write(content)
-
-def html_def(content, data, count, out_file):
-	out_file.write('<div class="def" id="def' + str(count) + '"><div id="def' + str(count) + 'header"><h2>' + data + '</h2></div><p>' + content + '</p>')
-
-def html_editor(content, editor_count, out_file):
-	out_file.write('<button onclick="download(\'download\', getText(' + str(editor_count-1) +'))" \'>Download</button><div class="edit" style=\'border:solid 1px black;\' id=\'code_edit\' '+ str(editor_count) +'>')
-
-def newline_util(content):
-	for c in content:
-		if c.replace('\n', '').replace('\t','') != '':
-			return True
-	return False
-
-def html_code(content,out_file):
-	leading = re.match(r"\s*", content).group()
-	out_file.write('<pre class="prettyprint linenums">' + content.replace(leading,'\n'))
-
-def post_process(file, def_string, def_index, out_file):
-	file = file.replace(def_string, "<a href='#' onclick='hideMe(\"def" + str(def_index) + "\"); return false;'> " + def_string + "</a>")
-	name = out_file.name
-	out_file.close()
-	out_file = open(name, "w")
-	out_file.write(file)
+			prev_char = ch
 
 
-if __name__ == '__main__':
-	# filename = input("enter a .book file name  ==> ")
-	# file = open(filename, "r").read()
-	# data = re.sub('[\r]', '', file)
-	# control, args = parse(data)
-	print(str(newline_util('\n\t')))
+	#save whatever is left in the buffer
+	if last_token != "" or buff != "":
+		buff = buff.strip()
+		ret.append({last_token : buff})
+
+	# for x in ret:
+	# 	print(x)
+
+	#write the tokenized version to the html file
+	write(html_file, ret)
+
+	
+
+

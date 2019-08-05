@@ -1,0 +1,16 @@
+html{
+	font-family: Arial, Helvetica, sans-serif;line-height: 1.5;;
+}
+body{
+	display:grid;
+	grid-template-columns: 150px auto 150px;
+	grid-template-rows: auto;
+	align-items: center;
+}
+p,h2,ul,ol,h1{
+	grid-column-start : 2;
+	grid-column-end : 3;
+}
+h1{
+	margin:5px;
+}
