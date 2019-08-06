@@ -1,16 +1,58 @@
 html{
-	font-family: Arial, Helvetica, sans-serif;line-height: 1.5;;
+	font-family: Arial, Helvetica, sans-serif;line-height: 2;;
 }
-body{
-	display:grid;
-	grid-template-columns: 150px auto 150px;
-	grid-template-rows: auto;
-	align-items: center;
+@media only screen and (min-width: 1600px) and (max-width: 10000px){
+	body{
+		display:grid;
+		grid-template-columns: auto 800px auto;
+	}
+	
 }
-p,h2,ul,ol,h1{
+@media only screen and (min-width: 1280px) and (max-width: 1599px){
+	body{
+		display:grid;
+		grid-template-columns: 350px auto 350px;
+	}
+	
+}
+@media only screen and (min-width: 1025px) and (max-width: 1280px){
+	body{
+		display:grid;
+		grid-template-columns: 100px auto 100px;
+	}
+	
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px){
+	body{
+		display:grid;
+		grid-template-columns: 50px auto 50px;
+	}
+	
+}
+@media only screen and (min-width: 481px) and (max-width: 767px){
+	body{
+		display:grid;
+		grid-template-columns: 25px auto 25px;
+	}
+	
+}
+@media only screen and (min-width: 320px) and (max-width: 480px){
+	body{
+		display:grid;
+		grid-template-columns: 10px auto 10px;
+	}
+	
+}
+p,h2,ul,ol,h1,pre{
 	grid-column-start : 2;
 	grid-column-end : 3;
+	width:inherit;
+	margin:15px;
 }
-h1{
-	margin:5px;
+h1,h2{
+	margin-top:0px;
+	margin-bottom:0px;
+}
+.background{
+	background-color:rgb(250, 250, 250 );
 }

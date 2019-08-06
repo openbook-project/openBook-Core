@@ -3,14 +3,25 @@ import os
 
 import util
 import parser
+import htmlwriter
 
 #create the initial HTML file
 def initFile(filename):
     html_file = util.constructString(
         "<!DOCTYPE html>",
         "<html>",
-        "\t<link rel = \"stylesheet\" href = \"" + filename + ".css\">"
+        "\t<link rel = \"stylesheet\" href = \"" + filename + ".css\">",
+        "\t" + util.addJs(filename + ".js"),
+        "\t" + util.addJs("https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"),
         "<body>"
+    )
+
+    html_file += util.constructString(
+        "<div class = \"background\"" + htmlwriter.buildStyleString("grid-row-start:1",
+                                                                        "grid-row-end:100") + "></div>",
+        "<div class = \"background\""+ htmlwriter.buildStyleString("grid-column-start:3",
+                                             "grid-row-start:1",
+                                             "grid-row-end:100") + "></div>"
     )
 
     html_fd = open(filename + ".html", "w+")
@@ -19,25 +30,56 @@ def initFile(filename):
     css_fd = open(filename + ".css", "w+")
 
     css_file = util.addCss(
-        "html", "font-family: Arial, Helvetica, sans-serif;line-height: 1.5;"
+        "html", "font-family: Arial, Helvetica, sans-serif;line-height: 2;"
     )
-    css_file += util.addCss(
+    #add the media query for the body
+    css_file += util.addMediaQuery(
+        "1600", "10000",
         "body", "display:grid",
-        "grid-template-columns: 150px auto 150px",
-        "grid-template-rows: auto",
-        "align-items: center",
+        "grid-template-columns: auto 800px auto"
+    )
+    css_file += util.addMediaQuery(
+        "1280", "1599",
+        "body", "display:grid",
+        "grid-template-columns: 350px auto 350px"
+    )
+    css_file += util.addMediaQuery(
+        "1025", "1280",
+        "body", "display:grid",
+        "grid-template-columns: 100px auto 100px"
+    )
+    css_file += util.addMediaQuery(
+        "768", "1024",
+        "body", "display:grid",
+        "grid-template-columns: 50px auto 50px"
+    )
+    css_file += util.addMediaQuery(
+        "481", "767", "body", "display:grid",
+        "grid-template-columns: 25px auto 25px"
+    )
+    css_file += util.addMediaQuery(
+        "320", "480", "body", "display:grid",
+        "grid-template-columns: 10px auto 10px"
     )
     css_file += util.addCss(
-        "p,h2,ul,ol,h1", "grid-column-start : 2",
-        "grid-column-end : 3"
+        "p,h2,ul,ol,h1,pre", "grid-column-start : 2",
+        "grid-column-end : 3",
+        "width:inherit",
+        "margin:15px"
     )
     css_file += util.addCss(
-        "h1", "margin:5px"
+        "h1,h2", "margin-top:0px",
+        "margin-bottom:0px"
+    )
+    css_file += util.addCss(
+        ".background", "background-color:rgb(250, 250, 250 )"
     )
 
     css_fd.write(css_file)
     css_fd.close()
 
+    js_fd = open(filename + ".js", "w+")
+    js_fd.close()
     return html_fd
 
 def main():

@@ -1,10 +1,26 @@
-#title # hello world!
-#title# this is a nother!
-#par# foo
-#big# hello! #end#
+#title | center# Lecture 2 Strings & Vectors
 
+#big# #bold# Announcements #end# #end#
+
+#big# #bold# #emph# test #end# #end# #end#
 #list#
-	#item# foo
-	#item# foo2
-	#item# foo3
+	#item# HW 1 is available online through the website on the "Calendar"
+	#item# Be sure to read through the information as you start implementation of HW1
+	#item# TA & instructor office hours are posted on website "Weekly Schedule"
+	#item# Please use office hours and your lab time tomorrow to osort out any remaining installation problems with C++ enviornment on your laptop
 #end#
+
+#par# fLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has 
+survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+#code#
+	int
+	main(int argc, char ** argv)
+	{
+		return 0 * printf("hello world!\n");
+	}
+
+	void foo(){
+		return;
+	}
+#par# test2
