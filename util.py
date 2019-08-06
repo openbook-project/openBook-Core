@@ -37,8 +37,8 @@ def addMediaQuery(min_size, max_size, head_name, *objects):
 	ret += "}\n"
 	return ret
 
-def addJs(source):
-	ret = "<script src = \"" + source + "\"></script>"
+def addJs(source, options = ""):
+	ret = "<script src = \"" + source + "\"" + options +"></script>"
 	return ret
 
 #given a token (of type string) parses

@@ -9,10 +9,15 @@ import htmlwriter
 def initFile(filename):
     html_file = util.constructString(
         "<!DOCTYPE html>",
-        "<html>",
+        "<html lang=\"en\">",
+        "<head>",
+        "<title>" + filename + "</title>",
+        "<meta charset=\"UTF-8\">",
         "\t<link rel = \"stylesheet\" href = \"" + filename + ".css\">",
         "\t" + util.addJs(filename + ".js"),
         "\t" + util.addJs("https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"),
+        "\t" + util.addJs("https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML", "async"),
+        "</head>",
         "<body>"
     )
 
