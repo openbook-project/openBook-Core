@@ -67,7 +67,7 @@ def initFile(filename):
         "grid-template-columns: 10px auto 10px"
     )
     css_file += util.addCss(
-        "p,h2,ul,ol,h1,pre", "grid-column-start : 2",
+        "p,h2,ul,ol,h1,pre,a", "grid-column-start : 2",
         "grid-column-end : 3",
         "width:inherit",
         "margin:15px"

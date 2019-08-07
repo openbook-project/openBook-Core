@@ -39,12 +39,22 @@ def buildId(tag):
 # given a tag creates a properlly 
 # formatted string 
 # e.g p, content => <p> content </p>
-def writeHTMLTag(tag, content):
+def constructHTML(tag, content, style = "", end = True, args = []):
 	ret = "" 
 
-	ret += "<" + tag + ">\n"
+	ret += "<" + tag
+
+	for i in range(len(args)):
+		ret += " " + args[i]
+
+	if style != "":
+		ret += " " + style
+
+	ret += ">"
 	ret += "\t" + content + "\n"
-	ret += "</" + tag + ">\n"
+
+	if end == True:
+		ret += "</" + tag + ">\n"
 
 	return ret
 
@@ -133,4 +143,25 @@ def startEmph(content):
 
 def endEmph():
 	ret = "</i>\n"
+	return ret
+
+#if ops is empty just past the entire link
+#otherwise use an alternate
+def addLink(content, ops=[]):
+	alt = ""
+	style = getStyleOps(ops)
+	if len(style) > 0:
+		style = style[1]
+
+	if ops == []:
+		alt = content
+	else:
+		for x in ops:
+			x = x.strip()
+			if "alt=" in x:
+				alt = x.strip("alt=")
+				break
+
+	fields = ["href = \"" + content + "\""]
+	ret = constructHTML("a", alt, style, True, fields)
 	return ret

@@ -5,7 +5,8 @@ from collections import OrderedDict
 keys = {'title' : htmlwriter.writeTitle,
 		'par' : htmlwriter.writePar,
 		'item': htmlwriter.listItem,
-		'code': htmlwriter.addCode
+		'code': htmlwriter.addCode,
+		'link': htmlwriter.addLink
 		}
 
 nestable = {'big' : htmlwriter.startBig,

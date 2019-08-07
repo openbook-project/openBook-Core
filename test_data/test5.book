@@ -38,3 +38,8 @@ $$
 			&= \frac{(k+1)(k+2)}{2}
 	\end{align}
 $$
+
+#link | center, alt=foo# https://www.google.com
+#link# https://example.com
+
+#title# multiple titles?

@@ -43,7 +43,7 @@ html{
 	}
 	
 }
-p,h2,ul,ol,h1,pre{
+p,h2,ul,ol,h1,pre,a{
 	grid-column-start : 2;
 	grid-column-end : 3;
 	width:inherit;
