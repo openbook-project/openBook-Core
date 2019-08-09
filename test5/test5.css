@@ -18,7 +18,7 @@ html{
 @media only screen and (min-width: 1025px) and (max-width: 1280px){
 	body{
 		display:grid;
-		grid-template-columns: 100px auto 100px;
+		grid-template-columns: auto minmax(auto, 800px) auto;
 	}
 	
 }
@@ -49,10 +49,23 @@ p,h2,ul,ol,h1,pre,a{
 	width:inherit;
 	margin:15px;
 }
+b{
+	grid-column-start : 2;
+	grid-column-end : 3;
+	padding-left:15px;
+}
 h1,h2{
 	margin-top:0px;
 	margin-bottom:0px;
 }
 .background{
 	background-color:rgb(250, 250, 250 );
+}
+hr{
+	height: 1px;
+	border: 0;
+	border-top: 1px solid gray;
+	margin: 2.5px;
+	padding: 0;
+	width: 90%;
 }

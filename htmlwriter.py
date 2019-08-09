@@ -101,9 +101,14 @@ def addCode(content, ops = []):
 
 	return ret
 
-def startBig(content):
-	ret = ""
-	ret += "\t<h2>" + content
+def startBig(content, ops=[]):
+	style = getStyleOps(ops)
+	if len(style) > 0:
+		style = style[1]
+	else:
+		style = ""
+
+	ret = constructHTML("h2", content, style, True)
 
 	return ret
 
@@ -111,7 +116,7 @@ def endBig():
 	ret = "\t</h2>\n"
 	return ret
 
-def startList(content = ""):
+def startList(content = "", ops=[]):
 	ret = ""	
 	ret += "<ul>\n"
 
@@ -125,7 +130,7 @@ def endList():
 def listItem(content, ops = []):
 	return "\t<li>" + content + "</li>\n"
 
-def startBold(content):
+def startBold(content, ops=[]):
 	ret = ""
 	ret += "<b>" + content
 
@@ -135,7 +140,7 @@ def endBold():
 	ret = "</b>\n"
 	return ret
 
-def startEmph(content):
+def startEmph(content, ops=[]):
 	ret = ""
 	ret += "<i>" + content
 
@@ -167,9 +172,29 @@ def addLink(content, ops=[]):
 	return ret
 
 def startTex(content, ops=[]):
-	ret = "<div>" + content
+	style = buildStyleString("max-width:100vw")
+	ret = constructHTML("div", content, style, False )
 	return ret
 
 def endTex():
 	ret = "</div>\n"
+	return ret
+
+def startRef(content, ops=[]):
+	ret = "<div>\n"
+	return ret
+
+def endRef():
+	ret = "</div>"
+	return ret
+
+#content is ignored
+def addLine(content, ops = []):
+	styles = getStyleOps(ops)
+	if styles[0] > 0:
+		styles = styles[1]
+	else:
+		styles = buildStyleString('justify-self:center')
+
+	ret = constructHTML('hr/', "", styles, end=False ) 
 	return ret

@@ -10,8 +10,16 @@
 	#item# Please use office hours and your lab time tomorrow to osort out any remaining installation problems with C++ enviornment on your laptop
 #end#
 
+#line | left#
+
+#big | left # left! #end#
+#big | center# center! #end#
+#big|right # right!#end#
+
 #par# fLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has 
 survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+#line#
 
 #code#
 	int
@@ -44,6 +52,9 @@ $$
 #link | center, alt=foo# https://www.google.com
 #link# https://example.com
 
-#title|right# multiple titles?
+#title|center# multiple titles?
+#line#
+
+#big | center# subtitle! #end#
 
 #par# \# hello!

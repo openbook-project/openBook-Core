@@ -41,6 +41,14 @@ def addJs(source, options = ""):
 	ret = "<script src = \"" + source + "\"" + options +"></script>"
 	return ret
 
+def addJsFunc(func, *body):
+	ret = func + "({\n"
+	for x in body:
+		ret += "\t" + x + "\n"
+
+	ret += "})\n"
+	return ret
+
 #given a token (of type string) parses
 #and returns any options, if none are
 #entered an empty array is returned

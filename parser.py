@@ -6,7 +6,8 @@ keys = {'title' : htmlwriter.writeTitle,
 		'par' : htmlwriter.writePar,
 		'item': htmlwriter.listItem,
 		'code': htmlwriter.addCode,
-		'link': htmlwriter.addLink
+		'link': htmlwriter.addLink,
+		'line': htmlwriter.addLine,
 		}
 
 nestable = {'big' : htmlwriter.startBig,
@@ -21,8 +22,11 @@ nestable = {'big' : htmlwriter.startBig,
 			'tex_end' : htmlwriter.endTex
 			}
 
+groups = {'ref' : htmlwriter.startRef }
+
 def write(html_file, tokens):
 	stack = []
+	group = []
 	for t in tokens:
 		tag = list(t.keys())[0]
 		content = t[tag]
@@ -30,12 +34,17 @@ def write(html_file, tokens):
 		if tag in keys:
 			html_file.write(keys[tag](content, options))
 		elif tag in nestable:
-			html_file.write(nestable[tag](content))
+			html_file.write(nestable[tag](content, options))
 			stack.append(tag)
 		elif tag == "end":
 			if len(stack) > 0:
 				func = stack.pop() + "_end"
 				if func in nestable:
+					html_file.write(nestable[func]())
+
+			if len(group) > 0:
+				func = stack.pop() + "_end"
+				if func in groups:
 					html_file.write(nestable[func]())
 			
 

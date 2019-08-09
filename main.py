@@ -51,7 +51,7 @@ def initFile(filename):
     css_file += util.addMediaQuery(
         "1025", "1280",
         "body", "display:grid",
-        "grid-template-columns: 100px auto 100px"
+        "grid-template-columns: auto minmax(auto, 800px) auto"
     )
     css_file += util.addMediaQuery(
         "768", "1024",
@@ -73,17 +73,32 @@ def initFile(filename):
         "margin:15px"
     )
     css_file += util.addCss(
+        "b", "grid-column-start : 2",
+        "grid-column-end : 3",
+        "padding-left:15px"
+    )
+    css_file += util.addCss(
         "h1,h2", "margin-top:0px",
         "margin-bottom:0px"
     )
     css_file += util.addCss(
         ".background", "background-color:rgb(250, 250, 250 )"
     )
+    css_file += util.addCss(
+        "hr",
+        "height: 1px",
+        "border: 0",
+        "border-top: 1px solid gray",
+        "margin: 2.5px",
+        "padding: 0",
+        "width: 90%",
+    )
 
     css_fd.write(css_file)
     css_fd.close()
 
     js_fd = open(filename + ".js", "w+")
+    #todo add JS stuff
     js_fd.close()
     return html_fd
 
