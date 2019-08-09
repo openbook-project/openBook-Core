@@ -16,7 +16,9 @@ nestable = {'big' : htmlwriter.startBig,
 			'bold' : htmlwriter.startBold,
 			'bold_end' : htmlwriter.endBold,
 			'emph' : htmlwriter.startEmph,
-			'emph_end' : htmlwriter.endEmph
+			'emph_end' : htmlwriter.endEmph,
+			'tex' : htmlwriter.startTex,
+			'tex_end' : htmlwriter.endTex
 			}
 
 def write(html_file, tokens):
@@ -51,6 +53,9 @@ def parse(html_file, source_file):
 	for line in source_file:
 		for ch in line:
 			if ch != '#' or (ch == '#' and prev_char == "\\"):
+				if ch == '#' and prev_char == '\\':
+					buff = buff.replace("\\", "", 1)
+
 				if outside_token:
 					buff += ch
 				else:

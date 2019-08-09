@@ -165,3 +165,11 @@ def addLink(content, ops=[]):
 	fields = ["href = \"" + content + "\""]
 	ret = constructHTML("a", alt, style, True, fields)
 	return ret
+
+def startTex(content, ops=[]):
+	ret = "<div>" + content
+	return ret
+
+def endTex():
+	ret = "</div>\n"
+	return ret
