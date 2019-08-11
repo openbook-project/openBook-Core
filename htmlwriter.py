@@ -16,7 +16,6 @@ def getStyleOps(options):
 	ret = []
 	string = "style=\""
 	count = 0
-
 	for op in options:
 		if op in align_ops:
 			string += align_ops[op]
@@ -180,10 +179,6 @@ def endTex():
 	ret = "</div>\n"
 	return ret
 
-def startRef(content, ops=[]):
-	ret = "<div>\n"
-	return ret
-
 def endRef():
 	ret = "</div>"
 	return ret
@@ -196,5 +191,42 @@ def addLine(content, ops = []):
 	else:
 		styles = buildStyleString('justify-self:center')
 
-	ret = constructHTML('hr/', "", styles, end=False ) 
+	ret = constructHTML('hr/', "", styles, False ) 
 	return ret
+
+def linkRef(content, ops=[]):
+	link = "href=\"#\""
+	action = "onclick=toggle(\"" + ops[0] + "\");" 
+	return constructHTML("a", ops[0], "", True, [action,link])
+
+def endRef():
+	return "\t</div>\n"
+
+def startRef(content, ops=[]):
+	name = ""
+	for op in ops:
+		if 'name' in op:
+			name = op['name']
+			break
+
+
+	ret = constructHTML("div", "", "", False, 
+		[
+			'id="' + name + '"',
+			'class="draggable"',
+			'style="display:none;"'
+		] )
+	ret += "\t"
+	ret += constructHTML("div", "", "", False, 
+		[ 
+			'draggable="true"', 'class="ref_header"',
+			'draggable="true"', 'ondragstart="beginDrag(event);',
+			'dragstart_handler(event);"', 'ondragend = "endDrag(event)"'
+		] )
+
+	ret += constructHTML("h2", name, "style='color:white;'")
+	ret += "\t</div>"
+
+	return ret
+
+

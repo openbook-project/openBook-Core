@@ -84,4 +84,34 @@ def parseOptions(string):
 
 	token = token.strip()
 
+
 	return [token, ret]
+
+#given an of options, returns 
+#a dictionary of =s
+def tokenizeOptions(ops):
+	ret = []
+	for x in ops:
+		if '=' not in x:
+			continue
+
+		x = x.split('=')
+
+		if len(x) != 2:
+			continue
+
+		tmp = {x[0].strip() : x[1].strip()}
+		ret.append(tmp)
+
+	return ret
+
+#is a ref token a target or src,
+#src should have the 'name' option defined
+def isSrcRef(ops):
+	ops = tokenizeOptions(ops)
+	
+	for x in ops:
+		if 'name' in x:
+			return True
+
+	return False

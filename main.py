@@ -93,12 +93,55 @@ def initFile(filename):
         "padding: 0",
         "width: 90%",
     )
+    css_file += util.addCss(
+        ".draggable",
+        "position:absolute",
+        "z-index:9",
+        "border:1px solid #d3d3d3",
+        "background-color:white",
+        "max-width:500px"
+    )
+
+    css_file += util.addCss(
+        ".ref_header",
+        "cursor:move",
+        "z-index:10",
+        "background-color:#9c84a4",
+        "color:#fff"
+    )
 
     css_fd.write(css_file)
     css_fd.close()
 
     js_fd = open(filename + ".js", "w+")
-    #todo add JS stuff
+    
+    js_file = util.constructString(
+        "function toggle(element){",
+        "\tlet obj =  document.getElementById(element);",
+        "\tobj.style.display = obj.style.display === 'none' ? 'block' : 'none';",
+        "}\n")
+
+    js_file += util.constructString(
+        "let x_offset = 0;",
+        "let y_offset = 0;\n",
+        "function beginDrag(e){",
+        "\tlet init = e.target;",
+        "\tx_offset = e.clientX - init.style.left.substr(0, init.style.left.length - 2);",
+        "\ty_offset = e.clientY - init.style.top.substr(0, init.style.top.length - 2);",
+        "}\n"
+
+        "function endDrag(e){",
+        "\tlet obj = e.target.parentNode;",
+        
+        "\tobj.style.left = String(e.clientX - x_offset) + \"px\";",
+        "\tobj.style.top = String(e.clientY - y_offset) + \"px\";",
+        "}\n",
+        "function dragstart_handler(e) {",
+        "\te.dataTransfer.setData(\"text/plain\", e.target.innerText);",
+        "}"
+        )
+
+    js_fd.write(js_file)
     js_fd.close()
     return html_fd
 

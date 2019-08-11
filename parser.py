@@ -8,6 +8,7 @@ keys = {'title' : htmlwriter.writeTitle,
 		'code': htmlwriter.addCode,
 		'link': htmlwriter.addLink,
 		'line': htmlwriter.addLine,
+		'ref' : htmlwriter.linkRef
 		}
 
 nestable = {'big' : htmlwriter.startBig,
@@ -22,7 +23,8 @@ nestable = {'big' : htmlwriter.startBig,
 			'tex_end' : htmlwriter.endTex
 			}
 
-groups = {'ref' : htmlwriter.startRef }
+groups = {'ref' : htmlwriter.startRef,
+		  'ref_end':htmlwriter.endRef }
 
 def write(html_file, tokens):
 	stack = []
@@ -31,21 +33,30 @@ def write(html_file, tokens):
 		tag = list(t.keys())[0]
 		content = t[tag]
 		options = t["options"]
-		if tag in keys:
+
+		if tag in keys and tag in groups:
+			#determine which type we're dealing with
+			if util.isSrcRef(options):
+				option_keys = util.tokenizeOptions(options)
+				html_file.write(groups[tag](content,option_keys))
+				stack.append(tag)
+			else:
+				html_file.write(keys[tag](content,options))
+
+		elif tag in keys:
 			html_file.write(keys[tag](content, options))
 		elif tag in nestable:
 			html_file.write(nestable[tag](content, options))
 			stack.append(tag)
+
 		elif tag == "end":
 			if len(stack) > 0:
 				func = stack.pop() + "_end"
 				if func in nestable:
 					html_file.write(nestable[func]())
-
-			if len(group) > 0:
-				func = stack.pop() + "_end"
-				if func in groups:
-					html_file.write(nestable[func]())
+		
+				elif func in groups:
+					html_file.write(groups[func]())
 			
 
 #first tokenize the file

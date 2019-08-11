@@ -69,3 +69,16 @@ hr{
 	padding: 0;
 	width: 90%;
 }
+.draggable{
+	position:absolute;
+	z-index:9;
+	border:1px solid #d3d3d3;
+	background-color:white;
+	max-width:500px;
+}
+.ref_header{
+	cursor:move;
+	z-index:10;
+	background-color:#9c84a4;
+	color:#fff;
+}
