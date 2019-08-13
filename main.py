@@ -67,15 +67,16 @@ def initFile(filename):
         "grid-template-columns: 10px auto 10px"
     )
     css_file += util.addCss(
-        "p,h2,ul,ol,h1,pre,a", "grid-column-start : 2",
+        "p,h2,ul,ol,h1,pre", "grid-column-start : 2",
         "grid-column-end : 3",
         "width:inherit",
         "margin:15px"
     )
     css_file += util.addCss(
-        "b", "grid-column-start : 2",
+        "b,i,a", "grid-column-start : 2",
         "grid-column-end : 3",
-        "padding-left:15px"
+        "padding-left:15px",
+        "padding-right:15px"
     )
     css_file += util.addCss(
         "h1,h2", "margin-top:0px",
@@ -99,7 +100,15 @@ def initFile(filename):
         "z-index:9",
         "border:1px solid #d3d3d3",
         "background-color:white",
-        "max-width:500px"
+        "max-width:500px",
+        "border-radius: 10px 10px 0px 0px",
+        "box-shadow: 1px 1px 12px grey;"
+    )
+
+    css_file += util.addCss(
+        ".draggable_content",
+        "max-height:400px",
+        "overflow-y:auto",
     )
 
     css_file += util.addCss(
@@ -107,7 +116,12 @@ def initFile(filename):
         "cursor:move",
         "z-index:10",
         "background-color:#9c84a4",
-        "color:#fff"
+        "color:#fff",
+        "display: grid",
+        "grid-template-columns: 10px auto 20px 10px",
+        "grid-column-start: 1",
+        "align-items: center",
+        "border-radius: 10px 10px 0px 0px"
     )
 
     css_fd.write(css_file)
@@ -125,21 +139,32 @@ def initFile(filename):
         "let x_offset = 0;",
         "let y_offset = 0;\n",
         "function beginDrag(e){",
-        "\tlet init = e.target;",
-        "\tx_offset = e.clientX - init.style.left.substr(0, init.style.left.length - 2);",
-        "\ty_offset = e.clientY - init.style.top.substr(0, init.style.top.length - 2);",
+        "\tx_offset = e.clientX",
+        "\ty_offset = e.clientY",
         "}\n"
 
         "function endDrag(e){",
         "\tlet obj = e.target.parentNode;",
         
-        "\tobj.style.left = String(e.clientX - x_offset) + \"px\";",
-        "\tobj.style.top = String(e.clientY - y_offset) + \"px\";",
-        "}\n",
+        "\tlet x = x_offset - e.clientX;",
+        "\tlet y = y_offset - e.clientY;",
+
+        "\tobj.style.left = (obj.offsetLeft - x) + \"px\";",
+        "\tobj.style.top = (obj.offsetTop - y) + \"px\";",
+        "}\n\n",
+
         "function dragstart_handler(e) {",
         "\te.dataTransfer.setData(\"text/plain\", e.target.innerText);",
         "}"
         )
+
+    js_file += util.constructString(
+        "function moveToPosition(e, element){",
+        "\tlet obj = document.getElementById(element);",
+        "\tobj.style.left = e.pageX + 'px';",
+        "\tobj.style.top = e.pageY + 'px';",
+        "}"
+    )
 
     js_fd.write(js_file)
     js_fd.close()
@@ -153,6 +178,7 @@ def main():
     else:
         filename = sys.argv[1]
 
+
     #try and open the file
     try:
     	fd = open(filename, "r")
@@ -164,11 +190,19 @@ def main():
     file_location = os.path.basename(filename)
     filename = os.path.splitext(file_location)[0]
 
+    #if the user gave a third param, make the book there
+    if(len(sys.argv) == 3):
+        os.chdir(sys.argv[2])
+
     #create directories for book if they don't exist
     if not os.path.exists(filename):
         os.mkdir(filename)
 
     os.chdir(filename)
+
+    if not os.path.exists("media"):
+        os.mkdir("media")
+
     html_fd = initFile(filename)
 
     parser.parse(html_fd, fd)

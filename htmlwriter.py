@@ -1,4 +1,6 @@
-
+import util
+import os
+import glob
 
 align_ops = {'center' : 'justify-self : center;',
 			 'left' : 'justify-self : start;',
@@ -78,11 +80,9 @@ def writeTitle(content, ops = []):
 
 def writePar(content, ops = []):
 	ret = ""
+	style = getStyleOps(ops)[1]
 
-	ret += "<p>\n"
-	ret += "\t" + content + "\n"
-	ret += "</p>\n"
-
+	ret = constructHTML("p", content, style )
 	return ret
 
 #options |linenums -> enable line numbers
@@ -140,8 +140,8 @@ def endBold():
 	return ret
 
 def startEmph(content, ops=[]):
-	ret = ""
-	ret += "<i>" + content
+	style = getStyleOps(ops)[1]
+	ret = constructHTML("i", content, style, False )
 
 	return ret
 
@@ -160,10 +160,10 @@ def addLink(content, ops=[]):
 	if ops == []:
 		alt = content
 	else:
-		for x in ops:
-			x = x.strip()
-			if "alt=" in x:
-				alt = x.strip("alt=")
+		key_ops = util.tokenizeOptions(ops)
+		for x in key_ops:
+			if "alt" in x:
+				alt = x["alt"]
 				break
 
 	fields = ["href = \"" + content + "\""]
@@ -195,12 +195,25 @@ def addLine(content, ops = []):
 	return ret
 
 def linkRef(content, ops=[]):
-	link = "href=\"#\""
-	action = "onclick=toggle(\"" + ops[0] + "\");" 
-	return constructHTML("a", ops[0], "", True, [action,link])
+
+	key_ops = util.tokenizeOptions(ops)
+
+	src = ""
+	found = False
+	for x in key_ops:
+		if "src" in x:
+			src = x["src"]
+			found = True
+			break
+
+	link = "href=\"#" + src + "\""
+
+	target = "\"" + src + "\""
+	action = "onclick='moveToPosition(event, " + target + ") ; toggle(" + target + ");'"
+	return constructHTML("a", src, "", True, [action,link])
 
 def endRef():
-	return "\t</div>\n"
+	return "\t</div>\n</div>\n"
 
 def startRef(content, ops=[]):
 	name = ""
@@ -225,8 +238,78 @@ def startRef(content, ops=[]):
 		] )
 
 	ret += constructHTML("h2", name, "style='color:white;'")
-	ret += "\t</div>"
+
+	ret += constructHTML("div", "X", "style='justify-self:right; cursor:pointer; z-index:12;'", True, 
+		["onclick=\"this.parentNode.parentNode.style.display = 'none'\""] )
+
+	ret += "\t</div>\n"
+	ret += "<div class = 'draggable_content'>\n"
 
 	return ret
 
+def addImage(content, ops=[]):
 
+	style = getStyleOps(ops)[1]
+
+	#is this external or internal?
+	key_ops = util.tokenizeOptions(ops)
+	found = False
+	for x in key_ops:
+		if "src" in x:
+			src = x["src"]
+			found = True
+			break
+
+	if not found:
+		return ""
+
+	alt = ""
+
+	external = util.isURL(src)
+	
+	#if we're an external image just copy the url in
+	if external :
+		alt = "external image"
+	else :
+		alt = src
+
+	#otherwise we have to look for the name,
+	#if there is no extension and its not an absolute path
+	found = False
+	src
+	if not external:
+
+		location = "media/"
+		if os.path.isabs(src):
+			location = src
+
+		#do we have an extension
+		if not util.isValidExtension(src):
+			for file in os.listdir(location):
+				filename = os.path.splitext(file)[0]
+
+				if filename == src:
+					src = file
+					found = True
+					break
+
+			#did not find the file, display err and return
+			if not found:
+				print("Warning : could not find file with base name of \"" + src + "\" under " + location)
+				return ""
+		src = "media/" + src
+
+
+
+	ret = constructHTML("img", "", style, False, 
+		["src = \"" + src + "\""])
+
+	return ret
+
+def addSubTitle(content, ops=[]):
+	style = getStyleOps(ops)[1]
+	ret = constructHTML("h2", content, style, )
+	return ret
+
+def addPadding(content, ops=[]):
+	return "</br>"

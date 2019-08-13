@@ -10,7 +10,7 @@
 	#item# Please use office hours and your lab time tomorrow to osort out any remaining installation problems with C++ enviornment on your laptop
 #end#
 
-#line | left#
+#break | left#
 
 #big | left # left! #end#
 #big | center# center! #end#
@@ -19,7 +19,7 @@
 #par# fLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has 
 survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
-#line#
+#break#
 
 #code#
 	int
@@ -53,7 +53,7 @@ $$
 #link# https://example.com
 
 #title|center# multiple titles?
-#line#
+#break#
 
 #big | center# subtitle! #end#
 
@@ -65,6 +65,26 @@ $$
 	Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has 
 survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with deskto
 
+	#par#
+	Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has 
+survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with deskto
+	
+	#ref | ref 2#
+
+#end#
+
+#ref | name = ref 2#
+	#title# ref 2!
+	
+	#par#
+	Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has 
+survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with deskto
+
+	#img | src = https://avatars1.githubusercontent.com/u/48601066?s=200&v=4#
+
 #end#
 
 #ref | koalas#
+
+#img | src = koalas, center#
+#img | src = https://avatars1.githubusercontent.com/u/48601066?s=200&v=4#

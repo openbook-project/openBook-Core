@@ -1,3 +1,5 @@
+import re
+
 
 # given a number of strings return
 # them stitched together with a newline 
@@ -95,7 +97,7 @@ def tokenizeOptions(ops):
 		if '=' not in x:
 			continue
 
-		x = x.split('=')
+		x = x.split('=', 1)
 
 		if len(x) != 2:
 			continue
@@ -115,3 +117,10 @@ def isSrcRef(ops):
 			return True
 
 	return False
+
+def isURL(string):
+	url = re.findall('http[s]', string) 
+	return url != []
+
+def isValidExtension(ext):
+	ext.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))

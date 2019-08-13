@@ -1,0 +1,218 @@
+#title# The OpenBook Project
+#break#
+
+#subtitle | center# Blog 1
+
+#par#
+Hi! This is an introduction to the OpenBook Project, this blog post will
+highlight what the project is about and discuss the state of the interperter
+so far
+
+#par# The OpenBook Project's goal is to build a simple, human readable syntax 
+that can generate high quality digital books. (Hint your reading an example of
+one right now!)
+
+#par# Like markdown, the OpenBook interperter parses user text and generates 
+HTML. So far these blocks are titles and paragraphs, pretty simple.
+OpenBook supports many more tags however! Like Markdown you can have lists:
+
+#list#
+	#item# I'm in a list!
+	#item# weeee
+	#item# I'm the last element
+#end#
+
+#par# You can also bold or emphasize text:
+
+#bold# I'm bold! #end#
+#emph# I'm slanted! #end#
+#big# I'm big! #end#
+
+#par# Links !
+
+#link# http:fakelink.foo
+#link | alt = im an alternative link!# http:fakelink.foo2
+
+#par# but wait you can do some fun things like text alignment!
+
+#emph# Left #end#
+#emph | center# Center #end#
+#emph | right# Right #end#
+
+#par | center # It all works on mobile too! (and many other device sizes try resizing your window now)
+
+#subtitle | center # The Syntax
+#break#
+
+#par# lets look at the design of the syntax, the goal is to be simple to write,
+yet powerful. Ideally it will be a middle ground between markdown and latex
+
+OpenBook tags are enclosed in hashtags (\#), Hashtags were choosen because they
+are easy to see and unary meaning no more needing to match brackets !
+
+#par#
+Heres a snippet of this OpenBook
+#code#
+	\#title\# The OpenBook Project
+	\#break\#
+
+	\#subtitle | center\# Blog 1
+
+	\#par\#
+	Hi! This is an introduction to the OpenBook Project...
+
+#end#
+
+#par#
+You can escape a hastag with a backslash, like this '\ \#'
+
+The syntax is pretty simple, the first part is the name of tag, options go after the pipe '|'
+and thats it! No more memorizing abstract markdown syntax and escaping reserved chars in latex!
+
+#par# There are 2 types of options, commands and parameters. Commands are instructions to change
+the look of an element and can be applied to many different types of elements. For example, 
+you saw the 'center' command which can be applied to text, titles, links, etc. Multiple 
+options can be written but need to be comma seperated, spacing does not matter
+
+#emph# Note: commands can be mutually exclusive and the last one written will be applied for 
+text justifcation #end#
+
+
+#bold# Text justifcation #end#
+#code#
+	\#title | center \# I'm a centered title!
+	\#par | right \# I'm right alligned!
+	\#subtitle|center,left,right\# I'm right aligned!
+#end#
+
+
+#bold# Parameters #end#
+#par# parameters require you to specify what your talking about, for example links
+can have alt text but say you want the alt text to be the word 'center', how do we
+determine if its a command or a parameter? In order to do so parameters use = signs 
+to figure out what your specifying.
+
+#par#
+Parameters and options can go in any order and are not space sensative
+
+#code#
+	\#link | alt = i'm an alt text link!, center\# I'm a centered alt-text link
+	\#img | src = koalas, alt = foo \# I'm an image with a defined alt text
+#end#
+
+#par# Images can link to local files or external links, when an OpenBook is generated
+a directory is created for it. From the command line a user can specify a source file
+and optionally an output location.
+
+By default the directory will be made in the same location, insde a .html, .js, and .css
+file will be created to support the OpenBook. There will also be a subdirectory called 
+media for images. This is the location OpenBook will search for by default for local images
+
+#par# e.g:
+
+#img | src=koalas #
+
+#code#
+	\# img | src=koalas \#
+#end#
+
+#emph# Note if the file is not in the media folder a warning will be displayed to the console,
+but don't worry we won't crash and burn like latex! #end#
+
+#par | center# images can be centered too!
+
+#img | src=koalas, center#
+
+#emph# notice that the extension is optional, if you don't provide one the interperter will
+search for a matching basename, you also specify an extension if you have duplicate basenames
+of course! #end#
+
+#par# External images work just like markdown, just provide a valid URL
+
+#img | center, src = https://avatars1.githubusercontent.com/u/48601066?s=200&v=4#
+
+#par# Code:	
+#code#
+	\#img | center, src = https://avatars1.githubusercontent.com/u/48601066?s=200&v=4\#
+#end#
+
+#par# You can also enter absolute paths to search outside of the media folder, note this
+will only work on the local CMD version, web versions of the interperter will restrict this
+for security reasons
+
+#title# Advanced Features
+
+#par# That was a lot of information and a ton of definitions! In traditional textbooks
+(and also digital books for somereason) the index of defintions is always at the end
+requiring you to change your place. 
+
+#par# OpenBooks has a reference system allowing the author to hyperlink to a defined reference 
+for quick lookup, heres the code first:
+
+#code#
+	\#ref name = hello world!\#
+		\#title\# The OpenBook Project
+		\#par\# The OpenBook Project's goal is to build a simple, human readable syntax 
+				that can generate high quality digital books.
+	\#end\#
+#end#
+
+#par# Once defined, we can then create a hyper link to a refrence by using its name
+
+#code#
+	\#ref | src = hello world!\#
+#end#
+
+#par | center # Try it out! Here's the hyperlink we just created!
+
+#ref | name = hello world!#
+		#title# The OpenBook Project
+		#par# The OpenBook Project's goal is to build a simple, human readable syntax 
+				that can generate high quality digital books.
+#end#
+
+#ref | src = hello world!# TEST
+
+#pad#
+#pad#
+
+#par# You should see a pop-up box containing a definition, its also draggable and
+can be moved around the screen. You can close it by hitting the 'X' in the top right corner
+
+#par# Many definitions usually reference other definitions, now all the relevent defs can
+be linked together for quick access! Heres an example of a ref within another
+
+#ref | name = ref2#
+#par#
+	Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has 
+survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with deskto
+
+	#img | src = https://avatars1.githubusercontent.com/u/48601066?s=200&v=4#
+	#pad#
+	#ref | src = hello world!#
+#end#
+
+#ref | src = ref2#
+
+#break#
+
+#title# bye!
+
+#par# 
+Once the website is up there will be full documention on all the tags and their options!
+Here are some features in development:
+
+#list#
+	#item# Jump to section
+	#item# link multiple pages together
+	#item# index page with all references
+	#item# ability to cite reference
+	#item# nightmode
+	#item# options (font, font-size, code-style.. etc)
+#end#
+#pad#
+#pad#
+
+#link | center, alt= GitHub # https://github.com/openbook-project#
+
+#pad#

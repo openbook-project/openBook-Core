@@ -7,8 +7,11 @@ keys = {'title' : htmlwriter.writeTitle,
 		'item': htmlwriter.listItem,
 		'code': htmlwriter.addCode,
 		'link': htmlwriter.addLink,
-		'line': htmlwriter.addLine,
-		'ref' : htmlwriter.linkRef
+		'break': htmlwriter.addLine,
+		'ref' : htmlwriter.linkRef,
+		'img':htmlwriter.addImage,
+		'subtitle': htmlwriter.addSubTitle,
+		'pad' : htmlwriter.addPadding
 		}
 
 nestable = {'big' : htmlwriter.startBig,
