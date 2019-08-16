@@ -23,7 +23,11 @@ for education.
 
 #big# Contributing #end#
 #par# The OpenBook project is released under the MIT License. The interperter is 
-written in Python3 along with the testing tools which use Selenium.
+written in Python3 along with the testing tools which use Selenium. See the Contributing
+page for more information:
+
+#link# https://github.com/openbook-project/openBook-Core/blob/master/CONTRIBUTING.md
+
 
 #par# See also the 
 #link | src = https://github.com/openbook-project/openBook-website# OpenBook Website
