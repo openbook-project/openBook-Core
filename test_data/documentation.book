@@ -59,5 +59,26 @@ To look outside of the media folder, you can enter an absolute path
 #item# alt = alt_text used for screen readers, by default the alt text will be extracted
 from the file name
 #end#
+
+#break#
+
+#big# Refrences #end#
+#code#
+	\#ref | name = example\#
+
+		\#title\# content!
+		\#par\# more
+
+	\#end\#
+
+#end#
+
+#par# You can link to a refrence with the following syntax:
+
+#code#
+	\#ref | src = example\#
+#end#
+
+#end#
 #pad#
 #pad#
