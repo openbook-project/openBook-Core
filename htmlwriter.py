@@ -166,8 +166,9 @@ def addLink(content, ops=[]):
 				alt = x["alt"]
 				break
 
-	fields = ["href = \"" + content + "\""]
-	ret = constructHTML("a", alt, style, True, fields)
+	fields = ["href = \"" + content + "\"",
+			  "alt = \"" + alt + "\""]
+	ret = constructHTML("a", content, style, True, fields)
 	return ret
 
 def startTex(content, ops=[]):
@@ -254,24 +255,29 @@ def addImage(content, ops=[]):
 	#is this external or internal?
 	key_ops = util.tokenizeOptions(ops)
 	found = False
+	alt = ""
 	for x in key_ops:
 		if "src" in x:
 			src = x["src"]
 			found = True
 			break
 
+	for x in key_ops:
+		if "alt" in x:
+			alt = x["alt"]
+			break
+
 	if not found:
 		return ""
-
-	alt = ""
 
 	external = util.isURL(src)
 	
 	#if we're an external image just copy the url in
-	if external :
-		alt = "external image"
-	else :
-		alt = src
+	if alt == "":
+		if external :
+			alt = "external image"
+		else :
+			alt = src
 
 	#otherwise we have to look for the name,
 	#if there is no extension and its not an absolute path
@@ -302,7 +308,9 @@ def addImage(content, ops=[]):
 
 
 	ret = constructHTML("img", "", style, False, 
-		["src = \"" + src + "\""])
+		["src = \"" + src + "\"",
+		 "alt = \"" + alt + "\""
+		])
 
 	return ret
 

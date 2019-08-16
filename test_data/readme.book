@@ -1,0 +1,31 @@
+#title# The OpenBook Project
+
+#break#
+
+#img | src = https://avatars1.githubusercontent.com/u/48601066?s=200&v=4, alt=OpenBook project logo, center#
+
+#big# About #end#
+#par# This repo is the core infrastructure for The Open Book
+project. In here is the interperter and testing infrastructure.
+
+#big# Mission Statement #end#
+#par# The goal is to provide a powerful yet friendly to use 
+syntax that allows users to create high quality digital media
+for education.
+
+#big# Features #end#
+#list#
+	#item# Simple markdown-like syntax but with more control
+	#item# Generates responsive HTML that works across all devices
+	#item# Accessible by default, HTML that is WAVE compliant 
+
+#end#
+
+#big# Contributing #end#
+#par# The OpenBook project is released under the MIT License. The interperter is 
+written in Python3 along with the testing tools which use Selenium.
+
+#par# See also the 
+#link | src = https://github.com/openbook-project/openBook-website# OpenBook Website
+
+#break#
