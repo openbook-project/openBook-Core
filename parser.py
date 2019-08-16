@@ -102,6 +102,7 @@ def parse(html_file, source_file):
 					r = util.parseOptions(token)
 
 					last_token = r[0]
+					last_token = last_token.lower()
 					last_options = r[1]
 					token = ""
 				outside_token = not outside_token

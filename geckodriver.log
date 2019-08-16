@@ -34,3 +34,4 @@ observe()@resource://gre/modules/addons/XPIProvider.jsm:2293
 1565934174142	Marionette	WARN	TLS certificate errors will be ignored for this session
 console.log: Accessibility service init or shutdown observer does not exist.
 *** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+console.log: Accessibility service init or shutdown observer does not exist.
