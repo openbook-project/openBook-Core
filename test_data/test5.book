@@ -84,7 +84,9 @@ survived not only five centuries, but also the leap into electronic typesetting,
 
 #end#
 
-#ref | koalas#
+#ref | src = koalas#
+
+
 
 #img | src = koalas, center#
 #img | src = https://avatars1.githubusercontent.com/u/48601066?s=200&v=4#
