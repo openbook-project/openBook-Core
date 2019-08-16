@@ -35,3 +35,10 @@ observe()@resource://gre/modules/addons/XPIProvider.jsm:2293
 console.log: Accessibility service init or shutdown observer does not exist.
 *** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
 console.log: Accessibility service init or shutdown observer does not exist.
+1565966883121	geckodriver	INFO	geckodriver 0.19.1
+1565966883125	geckodriver	INFO	Listening on 127.0.0.1:54331
+1565966884246	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-profile" "/tmp/rust_mozprofile.pfkTtV6aulcL"
+1565966889204	Marionette	INFO	Listening on port 37909
+1565966889282	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: Accessibility service init or shutdown observer does not exist.
+*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
