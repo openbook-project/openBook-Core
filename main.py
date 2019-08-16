@@ -1,112 +1,212 @@
-import parser
-import os
-import re
 import sys
-import ntpath
-import shutil
+import os
 
-HTML = ""
+import util
+import parser
+import htmlwriter
 
-def build_js():
-	return '''
-	<script>\nvar edits = [];
-	var list = document.getElementsByClassName(\'edit\');
-	for(var i = 0;i < list.length; i++){
-		edits.push(CodeMirror(document.getElementById(list[i].id)));} 
-		function getText(index){return edits[index].getValue();
-	}
-	function jump_section(){
-		var section = document.getElementById('chapter_select');
-		var index = section.selectedIndex+1; window.location = '#title' + index;
-	}'''
+#create the initial HTML file
+def initFile(filename):
+    html_file = util.constructString(
+        "<!DOCTYPE html>",
+        "<html lang=\"en\">",
+        "<head>",
+        "<title>" + filename + "</title>",
+        "<meta charset=\"UTF-8\">",
+        "\t<link rel = \"stylesheet\" href = \"" + filename + ".css\">",
+        "\t" + util.addJs(filename + ".js"),
+        "\t" + util.addJs("https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"),
+        "\t" + util.addJs("https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML", "async"),
+        "</head>",
+        "<body>"
+    )
 
-'''
-params js libs to add in head, filename, bookname, navbar
-return html string
-starts the output by writing the head and starting the content div
-'''
-def build_head(latex, code_mirror, filename, navbar):
-	book_name = "<span style='padding-right:25px;'><b>" + filename + "</b></span>"
-	init_html = "<!DOCTYPE html>\n<html>\n<head>\n" + latex  + "\n" + code_mirror 
-	init_html += "<title>" + filename + "</title>\n\
-	<script src='https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=sunburst'>\n\
-	</script>\n<link rel='stylesheet' href='" + filename + ".css'>\n"
-	init_html +=  "<meta name='viewport' content='width=device-width, initial-scale=1.0'>\n\
-	</head>\n<body>\n<div id='navbar'>" + book_name + navbar
-	init_html += "</div><div class='container'>\n<div id='content'>"
-	return init_html
-	
-'''
-params  number of titles in the current file
-returns html string
-builds a navigation bar that allows jumping to different chapters
-'''
-def build_navbar(title_count):
-	navbar = "\nChapter Select: <select onchange='jump_section()' id='chapter_select'>"
-	for i in range(title_count):
-		navbar += "<option value = 'chapter : " + str(i+1) + "'>" + str(i+1) + "</option>"
+    html_file += util.constructString(
+        "<div class = \"background\"" + htmlwriter.buildStyleString("grid-row-start:1",
+                                                                        "grid-row-end:100") + "></div>",
+        "<div class = \"background\""+ htmlwriter.buildStyleString("grid-column-start:3",
+                                             "grid-row-start:1",
+                                             "grid-row-end:100") + "></div>"
+    )
 
-	navbar += "</select>"
-	return navbar
+    html_fd = open(filename + ".html", "w+")
+    html_fd.write(html_file)
+
+    css_fd = open(filename + ".css", "w+")
+
+    css_file = util.addCss(
+        "html", "font-family: Arial, Helvetica, sans-serif;line-height: 2;"
+    )
+    #add the media query for the body
+    css_file += util.addMediaQuery(
+        "1600", "10000",
+        "body", "display:grid",
+        "grid-template-columns: auto 800px auto"
+    )
+    css_file += util.addMediaQuery(
+        "1280", "1599",
+        "body", "display:grid",
+        "grid-template-columns: 350px auto 350px"
+    )
+    css_file += util.addMediaQuery(
+        "1025", "1280",
+        "body", "display:grid",
+        "grid-template-columns: auto minmax(auto, 800px) auto"
+    )
+    css_file += util.addMediaQuery(
+        "768", "1024",
+        "body", "display:grid",
+        "grid-template-columns: 50px auto 50px"
+    )
+    css_file += util.addMediaQuery(
+        "481", "767", "body", "display:grid",
+        "grid-template-columns: 25px auto 25px"
+    )
+    css_file += util.addMediaQuery(
+        "320", "480", "body", "display:grid",
+        "grid-template-columns: 10px auto 10px"
+    )
+    css_file += util.addCss(
+        "p,h2,ul,ol,h1,pre", "grid-column-start : 2",
+        "grid-column-end : 3",
+        "width:inherit",
+        "margin:15px"
+    )
+    css_file += util.addCss(
+        "b,i,a", "grid-column-start : 2",
+        "grid-column-end : 3",
+        "padding-left:15px",
+        "padding-right:15px"
+    )
+    css_file += util.addCss(
+        "h1,h2", "margin-top:0px",
+        "margin-bottom:0px"
+    )
+    css_file += util.addCss(
+        ".background", "background-color:rgb(250, 250, 250 )"
+    )
+    css_file += util.addCss(
+        "hr",
+        "height: 1px",
+        "border: 0",
+        "border-top: 1px solid gray",
+        "margin: 2.5px",
+        "padding: 0",
+        "width: 90%",
+    )
+    css_file += util.addCss(
+        ".draggable",
+        "position:absolute",
+        "z-index:9",
+        "border:1px solid #d3d3d3",
+        "background-color:white",
+        "max-width:500px",
+        "border-radius: 10px 10px 0px 0px",
+        "box-shadow: 1px 1px 12px grey;"
+    )
+
+    css_file += util.addCss(
+        ".draggable_content",
+        "max-height:400px",
+        "overflow-y:auto",
+    )
+
+    css_file += util.addCss(
+        ".ref_header",
+        "cursor:move",
+        "z-index:10",
+        "background-color:#9c84a4",
+        "color:#fff",
+        "display: grid",
+        "grid-template-columns: 10px auto 20px 10px",
+        "grid-column-start: 1",
+        "align-items: center",
+        "border-radius: 10px 10px 0px 0px"
+    )
+
+    css_fd.write(css_file)
+    css_fd.close()
+
+    js_fd = open(filename + ".js", "w+")
+    
+    js_file = util.constructString(
+        "function toggle(element){",
+        "\tlet obj =  document.getElementById(element);",
+        "\tobj.style.display = obj.style.display === 'none' ? 'block' : 'none';",
+        "}\n")
+
+    js_file += util.constructString(
+        "let x_offset = 0;",
+        "let y_offset = 0;\n",
+        "function beginDrag(e){",
+        "\tx_offset = e.clientX",
+        "\ty_offset = e.clientY",
+        "}\n"
+
+        "function endDrag(e){",
+        "\tlet obj = e.target.parentNode;",
+        
+        "\tlet x = x_offset - e.clientX;",
+        "\tlet y = y_offset - e.clientY;",
+
+        "\tobj.style.left = (obj.offsetLeft - x) + \"px\";",
+        "\tobj.style.top = (obj.offsetTop - y) + \"px\";",
+        "}\n\n",
+
+        "function dragstart_handler(e) {",
+        "\te.dataTransfer.setData(\"text/plain\", e.target.innerText);",
+        "}"
+        )
+
+    js_file += util.constructString(
+        "function moveToPosition(e, element){",
+        "\tlet obj = document.getElementById(element);",
+        "\tobj.style.left = e.pageX + 'px';",
+        "\tobj.style.top = e.pageY + 'px';",
+        "}"
+    )
+
+    js_fd.write(js_file)
+    js_fd.close()
+    return html_fd
+
+def main():
+    #get the name of the file to parse
+    filename = ''
+    if(len(sys.argv) < 2):
+        filename = input("enter a .book file to parse\n")
+    else:
+        filename = sys.argv[1]
+
+
+    #try and open the file
+    try:
+    	fd = open(filename, "r")
+    except IOError:
+        print("Could not open " + filename)
+        sys.exit(1)
+
+    #remove path and extension from filename
+    file_location = os.path.basename(filename)
+    filename = os.path.splitext(file_location)[0]
+
+    #if the user gave a third param, make the book there
+    if(len(sys.argv) == 3):
+        os.chdir(sys.argv[2])
+
+    #create directories for book if they don't exist
+    if not os.path.exists(filename):
+        os.mkdir(filename)
+
+    os.chdir(filename)
+
+    if not os.path.exists("media"):
+        os.mkdir("media")
+
+    html_fd = initFile(filename)
+
+    parser.parse(html_fd, fd)
+
 
 if __name__ == "__main__":
-	#get the location of the file to parse
-	filename = ''
-	if len(sys.argv) <= 1:
-		filename = input("enter a .book file name  ==> ")
-	else:
-		filename = sys.argv[1]
-
-	file = open(filename, "r").read()
-	file.replace("\n","")
-	file.replace("\r","")
-
-	init_css = open("css_file.css").read()
-	#get the name of the file from the path and remove the extension
-	filename = ntpath.basename(filename)[:-5]
-
-	#create a new folder for the output
-	if not os.path.exists(filename):
-		os.mkdir(filename)
-
-	os.chdir(filename)
-
-	#create output
-	output = open(filename + ".html", "w")
-	outcss = open(filename + ".css", "w")
-
-	title_count = len(re.findall(".*#title#", file))
-	navbar = build_navbar(title_count)
-
-	#javascript scripts
-	code_mirror = "<script src=\"../lib/codemirror.js\"></script><link rel=\"stylesheet\" href=\"../lib/codemirror.css\"><script src=\"../mode/javascript/javascript.js\"></script>"
-	latex = '<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"></script>'
-	latex_settings = '<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [[\'$$\',\'$$\'], [\'\\(\',\'\\)\']]}});</script>'
-
-	init_html = build_head(latex, code_mirror, filename, navbar)
-
-	end_html = "<br><br><br></div>\n</div>\n</body>\n</html>"
-
-	output.write(init_html)
-	outcss.write(init_css)
-
-	#create a media folder if one doesn't exist
-	path = os.getcwd() + "/media"
-	if not(os.path.exists(path)):
-		os.mkdir(path)
-		os.mkdir(path + "/images")
-		os.mkdir(path + "/videos")
-
-	output.close()
-	content, media = parser.parse(file)
-
-	output = open(filename + '.html', 'a')
-
-	parser.driver(content, output, media)
-	output.write(end_html)
-
-	init_js = build_js()
-	output.write(init_js)
-
-	output.close()
-	outcss.close()
+	main()

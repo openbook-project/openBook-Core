@@ -1,0 +1,90 @@
+#title | center# Lecture 2 Strings & Vectors
+
+#big# #bold# Announcements #end# #end#
+
+#big# #bold# #emph# test #end# #end# #end#
+#list#
+	#item# HW 1 is available online through the website on the "Calendar"
+	#item# Be sure to read through the information as you start implementation of HW1
+	#item# TA & instructor office hours are posted on website "Weekly Schedule"
+	#item# Please use office hours and your lab time tomorrow to osort out any remaining installation problems with C++ enviornment on your laptop
+#end#
+
+#break | left#
+
+#big | left # left! #end#
+#big | center# center! #end#
+#big|right # right!#end#
+
+#par# fLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has 
+survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+#break#
+
+#code#
+	int
+	main(int argc, char ** argv)
+	{
+		return 0 * printf("hello world!\n");
+	}
+
+	void foo(){
+		return;
+	}
+#par | center # test2
+
+#tex#
+$$
+	\begin{align}
+		T(0)    &= \frac{0\cdot (0+1)}{2} = 0      && \text{Basis Step}\\
+		T(k)    &= \frac{k\cdot (k+1)}{2}          && \text{Inductive Hypothesis} \\
+		T(k+1)  &= \frac{(k+1)(k+2)}{2}            && \text{Inductive Step} \\
+			&= T(k) + k + 1	 	           && \text{From Lemma 1}\\
+			&= \frac{k \cdot (k+1)}{2} + k+1   && \text{From I.H}\\ 
+			&= \frac{k \cdot (k+1)}{2} + \frac{2(k+1)}{2} \\
+			&= \frac{k^2 + k + 2k + 2}{2} \\
+			&= \frac{k^2 + 3k + 2}{2} \\
+			&= \frac{(k+1)(k+2)}{2}
+	\end{align}
+$$
+#end#
+
+#link | center, alt=foo# https://www.google.com
+#link# https://example.com
+
+#title|center# multiple titles?
+#break#
+
+#big | center# subtitle! #end#
+
+#par# \# hello!
+
+#ref | name = koalas#
+	#title# ref title!
+	#par#
+	Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has 
+survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with deskto
+
+	#par#
+	Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has 
+survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with deskto
+	
+	#ref | ref 2#
+
+#end#
+
+#ref | name = ref 2#
+	#title# ref 2!
+	
+	#par#
+	Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has 
+survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with deskto
+
+	#img | src = https://avatars1.githubusercontent.com/u/48601066?s=200&v=4#
+
+#end#
+
+#ref | koalas#
+
+#img | src = koalas, center#
+#img | src = https://avatars1.githubusercontent.com/u/48601066?s=200&v=4#

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>test5</title>
+<meta charset="UTF-8">
+	<link rel = "stylesheet" href = "test5.css">
+	<script src = "test5.js"></script>
+	<script src = "https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"async></script>
+</head>
+<body>
+<div class = "background"style = "grid-row-start:1;grid-row-end:100;"></div>
+<div class = "background"style = "grid-column-start:3;grid-row-start:1;grid-row-end:100;"></div>
+<h1 id="title1" style="justify-self : center;">	Lecture 2 Strings & Vectors
+</h1>
+<h2 style="">	
+</h2>
+<b>Announcements</b>
+	</h2>
+<h2 style="">	
+</h2>
+<b><i>test</i>
+</b>
+	</h2>
+<ul>
+	<li>HW 1 is available online through the website on the "Calendar"</li>
+	<li>Be sure to read through the information as you start implementation of HW1</li>
+	<li>TA & instructor office hours are posted on website "Weekly Schedule"</li>
+	<li>Please use office hours and your lab time tomorrow to osort out any remaining installation problems with C++ enviornment on your laptop</li>
+</ul>
+<hr/ style="justify-self : start;">	
+<h2 style="justify-self : start;">	left!
+</h2>
+	</h2>
+<h2 style="justify-self : center;">	center!
+</h2>
+	</h2>
+<h2 style="justify-self : end">	right!
+</h2>
+	</h2>
+<p>
+	fLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has 
+survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+</p>
+<hr/ style = "justify-self:center;">	
+<pre class = "prettyprint">
+	int
+	main(int argc, char ** argv)
+	{
+		return 0 * printf("hello world!\n");
+	}
+
+	void foo(){
+		return;
+	}
+</pre>
+<p>
+	test2
+</p>
+<div style = "max-width:100vw;">	$$
+	\begin{align}
+		T(0)    &= \frac{0\cdot (0+1)}{2} = 0      && \text{Basis Step}\\
+		T(k)    &= \frac{k\cdot (k+1)}{2}          && \text{Inductive Hypothesis} \\
+		T(k+1)  &= \frac{(k+1)(k+2)}{2}            && \text{Inductive Step} \\
+			&= T(k) + k + 1	 	           && \text{From Lemma 1}\\
+			&= \frac{k \cdot (k+1)}{2} + k+1   && \text{From I.H}\\ 
+			&= \frac{k \cdot (k+1)}{2} + \frac{2(k+1)}{2} \\
+			&= \frac{k^2 + k + 2k + 2}{2} \\
+			&= \frac{k^2 + 3k + 2}{2} \\
+			&= \frac{(k+1)(k+2)}{2}
+	\end{align}
+$$
+</div>
+<a href = "https://www.google.com" style="justify-self : center;">	foo
+</a>
+<a href = "https://example.com" style="">	https://example.com
+</a>
+<h1 id="title2" style="justify-self : center;">	multiple titles?
+</h1>
+<hr/ style = "justify-self:center;">	
+<h2 style="justify-self : center;">	subtitle!
+</h2>
+	</h2>
+<p>
+	# hello!
+</p>
+<div id="koalas" class="draggable" style="display:none;">	
+	<div draggable="true" class="ref_header" draggable="true" ondragstart="beginDrag(event); dragstart_handler(event);" ondragend = "endDrag(event)">	
+<h2 style='color:white;'>	koalas
+</h2>
+<div onclick="this.parentNode.parentNode.style.display = 'none'" style='justify-self:right; cursor:pointer; z-index:12;'>	X
+</div>
+	</div>
+<div class = 'draggable_content'>
+<h1 id="title3" style = "justify-self : center;;">	ref title!
+</h1>
+<p>
+	Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has 
+survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with deskto
+</p>
+<p>
+	Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has 
+survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with deskto
+</p>
+<a onclick='moveToPosition(event, "ref 2") ; toggle("ref 2");' href="#ref 2">	ref 2
+</a>
+	</div>
+</div>
+<div id="ref 2" class="draggable" style="display:none;">	
+	<div draggable="true" class="ref_header" draggable="true" ondragstart="beginDrag(event); dragstart_handler(event);" ondragend = "endDrag(event)">	
+<h2 style='color:white;'>	ref 2
+</h2>
+<div onclick="this.parentNode.parentNode.style.display = 'none'" style='justify-self:right; cursor:pointer; z-index:12;'>	X
+</div>
+	</div>
+<div class = 'draggable_content'>
+<h1 id="title4" style = "justify-self : center;;">	ref 2!
+</h1>
+<p>
+	Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has 
+survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with deskto
+</p>
+<img src = "https://avatars1.githubusercontent.com/u/48601066?s=200&v=4" style="">	
+	</div>
+</div>
+<a onclick='moveToPosition(event, "koalas") ; toggle("koalas");' href="#koalas">	koalas
+</a>
+<img src = "media/koalas.jpeg" style="justify-self : center;">	
+<img src = "https://avatars1.githubusercontent.com/u/48601066?s=200&v=4" style="">	

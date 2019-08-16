@@ -39,3 +39,10 @@ button{
 	padding-left:10px;
 	padding-right : 10px;
 }
+#confetti_canvas{
+    position: absolute;
+    display: none;
+    z-index: 99999;
+    top:0px;
+    left: 0px;
+}
