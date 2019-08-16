@@ -43,16 +43,17 @@ html{
 	}
 	
 }
-p,h2,ul,ol,h1,pre,a{
+p,h2,ul,ol,h1,pre{
 	grid-column-start : 2;
 	grid-column-end : 3;
 	width:inherit;
 	margin:15px;
 }
-b{
+b,i,a{
 	grid-column-start : 2;
 	grid-column-end : 3;
 	padding-left:15px;
+	padding-right:15px;
 }
 h1,h2{
 	margin-top:0px;

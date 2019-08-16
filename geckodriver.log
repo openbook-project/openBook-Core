@@ -1,0 +1,36 @@
+1565933865029	geckodriver	INFO	geckodriver 0.19.1
+1565933865031	geckodriver	INFO	Listening on 127.0.0.1:42437
+1565933866214	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-headless" "-profile" "/tmp/rust_mozprofile.1lNuVgpjvnVr"
+*** You are running in headless mode.
+1565933888068	geckodriver	INFO	geckodriver 0.19.1
+1565933888071	geckodriver	INFO	Listening on 127.0.0.1:45691
+1565933889193	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-profile" "/tmp/rust_mozprofile.DPEAmYYezFAK"
+1565933894609	Marionette	INFO	Listening on port 33823
+1565933894705	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: Accessibility service init or shutdown observer does not exist.
+1565933899130	addons.xpi	WARN	Exception running bootstrap method shutdown on activity-stream@mozilla.org: [Exception... "Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIObserverService.removeObserver]"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "JS frame :: resource://activity-stream/lib/SnippetsFeed.jsm :: uninit :: line 185"  data: no] Stack trace: uninit()@resource://activity-stream/lib/SnippetsFeed.jsm:185
+onAction()@resource://activity-stream/lib/SnippetsFeed.jsm:201
+_middleware/</<()@resource://activity-stream/lib/Store.jsm:49
+Store/this[method]()@resource://activity-stream/lib/Store.jsm:28
+uninit()@resource://activity-stream/lib/Store.jsm:151
+uninit()@resource://activity-stream/lib/ActivityStream.jsm:300
+uninit()@resource://gre/modules/addons/XPIProvider.jsm -> jar:file:///usr/lib/firefox-esr/browser/features/activity-stream@mozilla.org.xpi!/bootstrap.js:73
+shutdown()@resource://gre/modules/addons/XPIProvider.jsm -> jar:file:///usr/lib/firefox-esr/browser/features/activity-stream@mozilla.org.xpi!/bootstrap.js:169
+callBootstrapMethod()@resource://gre/modules/addons/XPIProvider.jsm:4446
+observe()@resource://gre/modules/addons/XPIProvider.jsm:2293
+*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+1565934047924	geckodriver	INFO	geckodriver 0.19.1
+1565934047927	geckodriver	INFO	Listening on 127.0.0.1:43593
+1565934049051	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-profile" "/tmp/rust_mozprofile.DlUVryJsWP0r"
+1565934073228	geckodriver	INFO	geckodriver 0.19.1
+1565934073230	geckodriver	INFO	Listening on 127.0.0.1:55377
+1565934074378	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-profile" "/tmp/rust_mozprofile.T08Nve3DXMih"
+1565934078388	Marionette	INFO	Listening on port 40509
+1565934078409	Marionette	WARN	TLS certificate errors will be ignored for this session
+1565934168595	geckodriver	INFO	geckodriver 0.19.1
+1565934168597	geckodriver	INFO	Listening on 127.0.0.1:48257
+1565934169718	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-profile" "/tmp/rust_mozprofile.HhOylxI5Y1Fo"
+1565934174089	Marionette	INFO	Listening on port 39547
+1565934174142	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: Accessibility service init or shutdown observer does not exist.
+*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
