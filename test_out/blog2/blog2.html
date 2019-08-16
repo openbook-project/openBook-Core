@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>blog2</title>
+<meta charset="UTF-8">
+	<link rel = "stylesheet" href = "blog2.css">
+	<script src = "blog2.js"></script>
+	<script src = "https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"async></script>
+</head>
+<body>
+<div class = "background"style = "grid-row-start:1;grid-row-end:100;"></div>
+<div class = "background"style = "grid-column-start:3;grid-row-start:1;grid-row-end:100;"></div>
+<h1 id="title1" style = "justify-self : center;;">	why Laravel?
+</h1>
+<hr/ style = "justify-self:center;">	
+<img src = "https://nordicapis.com/wp-content/uploads/Laravel-logo.png" alt = "external image" style="justify-self : center;">	
+<a href = "https://laravel.com/" alt = "" style="justify-self : center;">	https://laravel.com/
+</a>
+<p style="">	We chose to use Laravel, a PHP framework to develope the 
+openBook project. Our tech stack is the LAMP stack 
+(Linux Apache MySQL PHP). Compared to newer projects 
+and especially the ones I've seen in Rcos, this stack
+isn't used fairly often, you tend to here the MEAN stack
+in newer projects.
+</p>
+<p style="">	Although an older tech stack, it is still very flexible with
+modern technology, for example we're opting to use postgresSQL
+and using PHP/Python as our backend scripting language. 
+An advantage of using PHP/Python is that we can quickly build
+an internal API to let PHP interact with various Python scripts.
+This allows for a powerful combination of the web's UI development
+with Python's extensive libraries and language capacity. Specifically, 
+we plan on creating a web version of our interpreter and we can easily 
+link our interpreter from the openBooks-Core repo and build a repo around it
+</p>
+<hr/ style = "justify-self:center;">	
+<b>But PHP is awful???</b>
+<p style="">	PHP has a bad reputation but I think people like to make fun of it
+because everyone else makes fun of it when in reality very few people who
+criticize really use it.
+There are a lot of advantages to using PHP:
+</p>
+<ul>
+	<li>It's fast, like really fast</li>
+	<li>great database support</li>
+	<li>Powers a ton of the inter-net - which means great support!</li>
+	<li>Its secure*</li>
+	<li>Lots of tools for testing</li>
+	<li>Stability and backwards comparability</li>
+</ul>
+<p style="">	*You may not associate security and PHP, but modern versions are very secure
+and do an excellent job of protecting developers from themselves. Combined 
+with a framework like laravel that handles some of the trickier parts like
+routing, PHP can be a very secure language.
+</p>
+<p style="">	However, PHP is an old language so theres a lot of misinformation on how to
+use it. PHP will also allows you to do whatever you want. Meaning where a number 
+of other languages will warn or stop you from doing something stupid PHP typically
+does not check for this (by default)
+</p>
+<p style="">	the reason for this is backwards compatibility, PHP has made great effort 
+in ensuring new versions are backwards compatible (a concept not included in 
+many new frameworks) as a result there are security holes that although are 
+marked deprecated are still in the language which personally I think is a fair 
+tradeoff.
+</p>
+<hr/ style = "justify-self:center;">	
+<b>Ok PHP is fine but you didn't answer why laravel</b>
+<p style="">	We choose laravel because we can spend more time developing our application, typically
+PHP requires you to set up a lot of infrastructure that we don't have the resources for.
+This allows us to quickly get going and also to use well developed features that we're 
+not familiar with like routing and database interactions.
+</p>
+<p style="">	Laravel also has a great test environments. Our setup uses Vagrant to develop. New
+developers only need to install virtual box + vagrant and simple do a 'vagrant up' to 
+build their test environment. This allows us to have one target OS which will be the 
+server OS and everyone else can have a pretty code model of what that setup will look like on their computer.
+</p>
+<hr/ style = "justify-self:center;">	
+<a href = "https://github.com/openbook-project/openBook-website" alt = "" style="justify-self : center;">	https://github.com/openbook-project/openBook-website
+</a>
+</br></br>
