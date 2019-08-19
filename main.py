@@ -181,7 +181,7 @@ def main():
 
     #try and open the file
     try:
-    	fd = open(filename, "r")
+        fd = open(filename, "r")
     except IOError:
         print("Could not open " + filename)
         sys.exit(1)
@@ -209,4 +209,4 @@ def main():
 
 
 if __name__ == "__main__":
-	main()
+    main()
