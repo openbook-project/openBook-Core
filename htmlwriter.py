@@ -167,7 +167,8 @@ def addLink(content, ops=[]):
 				break
 
 	fields = ["href = \"" + content + "\"",
-			  "alt = \"" + alt + "\""]
+			  "alt = \"" + alt + "\"" ,
+              "target = \"_blank\""]
 	ret = constructHTML("a", content, style, True, fields)
 	return ret
 
