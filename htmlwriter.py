@@ -60,7 +60,7 @@ def constructHTML(tag, content, style = "", end = True, args = []):
     return ret
 
 #construct a title
-def writeTitle(content, ops = []):
+def writeTitle(content, ops, line):
     style = getStyleOps(ops)
 
     counter['title'] += 1
@@ -78,7 +78,7 @@ def writeTitle(content, ops = []):
 
     return ret
 
-def writePar(content, ops = []):
+def writePar(content, ops, line):
     ret = ""
     style = getStyleOps(ops)[1]
 
@@ -87,7 +87,7 @@ def writePar(content, ops = []):
 
 #options |linenums -> enable line numbers
 #        |lang     -> target a specific language syntax 
-def addCode(content, ops = []):
+def addCode(content, ops, line):
     ret = ""
 
     ln = ""
@@ -100,7 +100,7 @@ def addCode(content, ops = []):
 
     return ret
 
-def startBig(content, ops=[]):
+def startBig(content, ops, line):
     style = getStyleOps(ops)
     if len(style) > 0:
         style = style[1]
@@ -115,7 +115,7 @@ def endBig():
     ret = "\t</h2>\n"
     return ret
 
-def startList(content = "", ops=[]):
+def startList(content, ops, line):
     ret = ""    
     ret += "<ul>\n"
 
@@ -126,10 +126,10 @@ def endList():
 
     return ret
 
-def listItem(content, ops = []):
+def listItem(content, ops, line):
     return "\t<li>" + content + "</li>\n"
 
-def startBold(content, ops=[]):
+def startBold(content, ops, line):
     ret = ""
     ret += "<b>" + content
 
@@ -139,7 +139,7 @@ def endBold():
     ret = "</b>\n"
     return ret
 
-def startEmph(content, ops=[]):
+def startEmph(content, ops, line):
     style = getStyleOps(ops)[1]
     ret = constructHTML("i", content, style, False )
 
@@ -151,7 +151,7 @@ def endEmph():
 
 #if ops is empty just past the entire link
 #otherwise use an alternate
-def addLink(content, ops=[]):
+def addLink(content, ops, line):
     alt = ""
     style = getStyleOps(ops)
     if len(style) > 0:
@@ -172,7 +172,7 @@ def addLink(content, ops=[]):
     ret = constructHTML("a", content, style, True, fields)
     return ret
 
-def startTex(content, ops=[]):
+def startTex(content, ops, line):
     style = buildStyleString("max-width:100vw")
     ret = constructHTML("div", content, style, False )
     return ret
@@ -186,7 +186,7 @@ def endRef():
     return ret
 
 #content is ignored
-def addLine(content, ops = []):
+def addLine(content, ops, line):
     styles = getStyleOps(ops)
     if styles[0] > 0:
         styles = styles[1]
@@ -196,7 +196,7 @@ def addLine(content, ops = []):
     ret = constructHTML('hr/', "", styles, False ) 
     return ret
 
-def linkRef(content, ops=[]):
+def linkRef(content, ops, line):
 
     key_ops = util.tokenizeOptions(ops)
 
@@ -217,7 +217,7 @@ def linkRef(content, ops=[]):
 def endRef():
     return "\t</div>\n</div>\n"
 
-def startRef(content, ops=[]):
+def startRef(content, ops, line):
     name = ""
     for op in ops:
         if 'name' in op:
@@ -249,7 +249,7 @@ def startRef(content, ops=[]):
 
     return ret
 
-def addImage(content, ops=[]):
+def addImage(content, ops, line):
 
     style = getStyleOps(ops)[1]
 
@@ -302,7 +302,7 @@ def addImage(content, ops=[]):
 
             #did not find the file, display err and return
             if not found:
-                print("Warning : could not find file with base name of \"" + src + "\" under " + location)
+                print("Warning (line " + str(line) + "): could not find file with base name of \"" + src + "\" under " + location)
                 return ""
         src = "media/" + src
 
@@ -315,10 +315,10 @@ def addImage(content, ops=[]):
 
     return ret
 
-def addSubTitle(content, ops=[]):
+def addSubTitle(content, ops, line):
     style = getStyleOps(ops)[1]
     ret = constructHTML("h2", content, style, )
     return ret
 
-def addPadding(content, ops=[]):
+def addPadding(content, ops, line):
     return "</br>"
