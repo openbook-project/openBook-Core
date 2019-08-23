@@ -1,6 +1,10 @@
 html{
 	font-family: Arial, Helvetica, sans-serif;line-height: 2;;
 }
+:root{
+	--primary:#9c84a4;
+	--highlight:#b597bf;
+}
 @media only screen and (min-width: 1600px) and (max-width: 10000px){
 	body{
 		display:grid;
@@ -93,4 +97,44 @@ hr{
 	grid-column-start: 1;
 	align-items: center;
 	border-radius: 10px 10px 0px 0px;
+}
+.navbar{
+	background: white;
+	position: fixed;
+	top : 0px;
+	width:300px;
+	height:100%;
+	z-index:100;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+.navbar h3{
+	color: white;
+	font-size: 1.9em;
+	padding: 20px;
+	margin: 0;
+	font-weight: 300;
+	background: var(--primary);
+}
+.navbar a{
+	display: block;
+	color: black;
+	font-size: 1.1em;
+	font-weight: 300;
+}
+.navbar a:hover{
+	background: var(--highlight);
+	color:white;
+}
+.navbar a{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.navbar a:link{
+	text-decoration:none;
+}
+.dropdown-container{
+	display: none;
+	padding-left: 8px;
 }

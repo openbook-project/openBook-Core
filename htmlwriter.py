@@ -1,14 +1,15 @@
 import util
 import os
 import glob
+import recorder
+from recorder import counter
 
 align_ops = {'center' : 'justify-self : center;',
              'left' : 'justify-self : start;',
-             'right' : 'justify-self : end'}
+             'right' : 'justify-self : end'
+            }
 
-counter = {'title' : 0,
-           'par' : 0,
-           'item' : 0}
+within_ref = False
 
 #given a list of options searches if 
 #any are of type style and returns a
@@ -64,6 +65,10 @@ def writeTitle(content, ops, line):
     style = getStyleOps(ops)
 
     counter['title'] += 1
+
+    if not within_ref:
+        recorder.recordTitle(counter['title'], content)
+
     ret = ""
 
     ret += "<h1 " + buildId('title') 
@@ -215,9 +220,11 @@ def linkRef(content, ops, line):
     return constructHTML("a", src, "", True, [action,link])
 
 def endRef():
+   # within_ref = False
     return "\t</div>\n</div>\n"
 
 def startRef(content, ops, line):
+    within_ref = True
     name = ""
     for op in ops:
         if 'name' in op:
@@ -317,8 +324,63 @@ def addImage(content, ops, line):
 
 def addSubTitle(content, ops, line):
     style = getStyleOps(ops)[1]
-    ret = constructHTML("h2", content, style, )
+
+    counter['subtitle'] += 1
+
+    if not within_ref:
+        recorder.recordSubtitle(counter['subtitle'], content);
+
+    ret = constructHTML("h2", content, style, True, 
+        [ "id = \"subtitle" + str(counter['subtitle'])  +"\""  
+        ])
+
     return ret
 
 def addPadding(content, ops, line):
     return "</br>"
+
+def buildNavBar():
+    ret = "<button id=\"showLeft\">ShowLeft</button>"
+    ret += constructHTML("nav", "", "", False, 
+        ["class=\"navbar\"",
+         "id=\"navbar\""
+        ])
+
+    ret += "\t<h3>Contents</h3>\n"
+
+    num_titles = len(recorder.index_list)
+    for index, key in enumerate(recorder.index_list):
+        if "sub" in key:
+            ret += constructHTML("a", recorder.index_list[key], "", True, [
+            "href = \"#" + key + "\""
+            ])
+        else:
+            if index > 0:
+                ret += "</div>\n"
+
+            ret += constructHTML("a", recorder.index_list[key], "", True,[
+                "href = \"#" + key + "\"",
+                "class = dropdown-btn"
+                ])
+
+            ret += constructHTML("div", "", "", False, [
+                "class=\"dropdown-container\"",
+                "id=\"" + str(index) + "\""
+                ])
+
+            
+
+
+    # for key in recorder.index_list:
+    #     if "sub" in key:
+    #         pass
+    #     else:
+    #         ret += constructHTML("a", recorder.index_list[key], "", True,[
+    #             "href = \"#" + key + "\""
+    #             ]) 
+    #         ret += constructHTML("div", "", "", False, [
+    #             "class=\"dropdown-container\""
+    #             ])
+        
+    ret += "</nav>\n"
+    return ret

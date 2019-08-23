@@ -1,5 +1,10 @@
 #title | center# Lecture 2 Strings & Vectors
 
+#subtitle | center # a 
+#subtitle | center # b
+#subtitle | center # c 
+#subtitle | center # d
+
 #big# #bold# Announcements #end# #end#
 
 #big# #bold# #emph# test #end# #end# #end#
@@ -55,7 +60,7 @@ $$
 #title|center# multiple titles?
 #break#
 
-#big | center# subtitle! #end#
+#subtitle # Foo!
 
 #par# \# hello!
 
