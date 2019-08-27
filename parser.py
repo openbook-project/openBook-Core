@@ -32,6 +32,7 @@ groups = {'ref' : htmlwriter.startRef,
 def write(html_file, tokens):
     stack = []
     group = []
+
     for t in tokens:
         tag = list(t.keys())[0]
         content = t[tag]
@@ -61,6 +62,9 @@ def write(html_file, tokens):
         
                 elif func in groups:
                     html_file.write(groups[func]())
+
+
+    html_file.write( htmlwriter.buildNavBar() )
             
 
 #first tokenize the file

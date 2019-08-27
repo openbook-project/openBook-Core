@@ -35,13 +35,21 @@ def initFile(filename):
     css_fd = open(filename + ".css", "w+")
 
     css_file = util.addCss(
-        "html", "font-family: Arial, Helvetica, sans-serif;line-height: 2;"
+        "html", "font-family: Arial, Helvetica, sans-serif",
+        "line-height: 2"
+    )
+    css_file += util.addCss(
+        ":root",
+        "--primary:#9c84a4",
+        "--highlight:#b597bf"
     )
     #add the media query for the body
     css_file += util.addMediaQuery(
         "1600", "10000",
         "body", "display:grid",
-        "grid-template-columns: auto 800px auto"
+        "grid-template-columns: auto 800px auto",
+        "margin:0px",
+        "padding:0px"
     )
     css_file += util.addMediaQuery(
         "1280", "1599",
@@ -123,6 +131,76 @@ def initFile(filename):
         "align-items: center",
         "border-radius: 10px 10px 0px 0px"
     )
+    css_file += util.addCss(
+        ".navbar",
+        "background: white",
+        "position: fixed",
+        "top : 0px",
+        "height:100%",
+        "z-index:100",
+        "-webkit-transition: all 0.3s ease",
+        "-moz-transition: all 0.3s ease",
+        "transition: all 0.3s ease"
+    )
+    css_file += util.addCss(
+        ".navbar h3",
+        "color: white",
+        "font-size: 1.9em",
+        "padding: 20px",
+        "margin: 0",
+        "font-weight: 300",
+        "background: var(--primary)",
+        "float:left"
+    )
+    css_file += util.addCss(
+        ".navbar a",
+        "display: block",
+        "color: black",
+        "font-size: 1.1em",
+        "font-weight: 300"
+    )
+    css_file += util.addCss(
+        ".navbar a:hover",
+        "background: var(--highlight)",
+        "color:white"
+    )
+    css_file += util.addCss(
+        ".navbar a",
+        "padding-top: 5px",
+        "padding-bottom: 5px",
+    )
+    css_file += util.addCss(
+        ".navbar a:link",
+        "text-decoration:none"
+    )
+    css_file += util.addCss(
+        ".dropdown-container",
+        "display: none",
+        "padding-left: 8px"
+    )
+    css_file += util.addCss(
+        "#exitNavBar", "float:right",
+        "cursor: pointer"
+    )
+    css_file += util.addCss(
+        ".navButton",
+        "position: fixed",
+        "top:10px",
+        "background-color: var(--primary)",
+        "width: 75px",
+        "height: 75px",
+        "border-radius: 50px",
+        "grid-column-start: 1",
+        "box-shadow:2px 2px 8px 2px  darkgray",
+        "cursor: pointer"
+    )
+    css_file += util.addCss(
+        ".bar",
+        "width: 35px",
+        "height: 5px",
+        "background-color: white",
+        "margin: 6px 20px"
+    )
 
     css_fd.write(css_file)
     css_fd.close()
@@ -163,6 +241,28 @@ def initFile(filename):
         "\tlet obj = document.getElementById(element);",
         "\tobj.style.left = e.pageX + 'px';",
         "\tobj.style.top = e.pageY + 'px';",
+        "}"
+    )
+    js_file += util.constructString(
+        "document.addEventListener('DOMContentLoaded', function() {",
+        "\tmenuLeft = document.getElementById( 'navbar' );",
+        "\tbody = document.body;",
+        "\tshowLeft = document.getElementById( 'showLeft' );",
+        "\tmenuLeft.style.left = \"-500px\";",
+        "\tvar dropdown = document.getElementsByClassName(\"dropdown-btn\");",
+        "\tvar i;",
+        "\tfor (i = 0; i < dropdown.length; i++) {",
+        "\t\tdropdown[i].addEventListener(\"click\", function() {",
+        "\t\tthis.classList.toggle(\"active\");",
+        "\t\tvar dropdownContent = this.nextElementSibling;",
+        "\t\tdropdownContent.style.display = dropdownContent.style.display === \"none\" ? \"block\" : \"none\";"
+        "\t\t});",
+        "\t}",
+        "});\n"
+    )
+    js_file += util.constructString(
+        "function toggleNavBar(){",
+        "\tmenuLeft.style.left = menuLeft.style.left == \"0px\" ? \"-500px\" : \"0px\";",
         "}"
     )
 
