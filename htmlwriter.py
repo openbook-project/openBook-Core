@@ -340,13 +340,28 @@ def addPadding(content, ops, line):
     return "</br>"
 
 def buildNavBar():
-    ret = "<button id=\"showLeft\">ShowLeft</button>"
+    ret = constructHTML("div", "", "", False,[
+        "class=\"navButton\"",
+        "id=\"showLeft\"",
+        "onclick=\"toggleNavBar()\""
+        ])
+
+    ret += "\t" + constructHTML("div", "", buildStyleString("margin-top:22px") , True, [
+        "class=\"bar\""
+        ])
+
+    ret += "\t<div class=\"bar\"></div>\n"
+    ret += "\t<div class=\"bar\"></div>\n"
+
+    ret += "</div>\n"
+
     ret += constructHTML("nav", "", "", False, 
         ["class=\"navbar\"",
          "id=\"navbar\""
         ])
 
-    ret += "\t<h3>Contents</h3>\n"
+    ret += "\t <div style= \"background-color: var(--primary); height: 100px;  width: 300px;\">" 
+    ret += "<h3>Contents</h3> <h3 id=\"exitNavBar\" onclick=\"toggleNavBar()\">X</h3></div>\n"
 
     num_titles = len(recorder.index_list)
     for index, key in enumerate(recorder.index_list):
@@ -367,20 +382,6 @@ def buildNavBar():
                 "class=\"dropdown-container\"",
                 "id=\"" + str(index) + "\""
                 ])
-
-            
-
-
-    # for key in recorder.index_list:
-    #     if "sub" in key:
-    #         pass
-    #     else:
-    #         ret += constructHTML("a", recorder.index_list[key], "", True,[
-    #             "href = \"#" + key + "\""
-    #             ]) 
-    #         ret += constructHTML("div", "", "", False, [
-    #             "class=\"dropdown-container\""
-    #             ])
         
     ret += "</nav>\n"
     return ret

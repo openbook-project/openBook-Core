@@ -32,9 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	body = document.body;
 	showLeft = document.getElementById( 'showLeft' );
 	menuLeft.style.left = "-500px";
-	showLeft.onclick = function() {
-		menuLeft.style.left = menuLeft.style.left == "0px" ? "-500px" : "0px";
-	};
 	var dropdown = document.getElementsByClassName("dropdown-btn");
 	var i;
 	for (i = 0; i < dropdown.length; i++) {
@@ -44,3 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		dropdownContent.style.display = dropdownContent.style.display === "none" ? "block" : "none";		});
 	}
 });
+
+function toggleNavBar(){
+	menuLeft.style.left = menuLeft.style.left == "0px" ? "-500px" : "0px";
+}
