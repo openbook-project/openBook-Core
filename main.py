@@ -292,7 +292,12 @@ def main():
 
     #if the user gave a third param, make the book there
     if(len(sys.argv) == 3):
-        os.chdir(sys.argv[2])
+        try:
+            os.chdir(sys.argv[2])
+        except FileNotFoundError:
+            #make the dir first
+            os.mkdir(sys.argv[2])
+            os.chdir(sys.argv[2])
 
     #create directories for book if they don't exist
     if not os.path.exists(filename):
