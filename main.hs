@@ -82,7 +82,8 @@ main = do
     initMedia
 
     lexed <- parse fd
-   
+    print lexed
 
     writeFile (fname ++ ".html") (initFile fname)
     writeFile (fname ++ ".css") (initCSS)
+    writeFile (fname ++ ".js") (initJS)

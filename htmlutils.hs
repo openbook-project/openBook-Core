@@ -38,6 +38,7 @@ addCSSMediaQuery min_size max_size name vals =
     "body{\n\t\t" ++
      (concat vals) ++ "\n\t}\n}\n"
 
+
 initCSS :: String 
 initCSS = 
     addCSSBlock "html" [
@@ -203,4 +204,58 @@ initCSS =
         "height: 5px;",
         "background-color: white;",
         "margin: 6px 20px;"
+    ]
+
+initJS :: String 
+initJS = 
+    concat [
+    "function toggle(element){\n",
+    "\tlet obj =  document.getElementById(element);\n",
+    "\tobj.style.display = obj.style.display === 'none' ? 'block' : 'none';\n",
+    "\n}\n\n",
+    "let x_offset = 0;\n",
+    "let y_offset = 0;\n",
+    "function beginDrag(e){",
+    "\tx_offset = e.clientX",
+    "\ty_offset = e.clientY",
+    "}\n\n",
+
+    "function endDrag(e){\n",
+    "\tlet obj = e.target.parentNode;\n",
+    
+    "\tlet x = x_offset - e.clientX;\n",
+    "\tlet y = y_offset - e.clientY;\n",
+
+    "\tobj.style.left = (obj.offsetLeft - x) + \"px\";",
+    "\tobj.style.top = (obj.offsetTop - y) + \"px\";",
+    "}\n\n",
+
+    "function dragstart_handler(e) {\n",
+    "\te.dataTransfer.setData(\"text/plain\", e.target.innerText);",
+    "}",
+    "function moveToPosition(e, element){\n",
+    "\tlet obj = document.getElementById(element);\n",
+    "\tobj.style.left = e.pageX + 'px';\n",
+    "\tobj.style.top = e.pageY + 'px';\n",
+    "}\n\n",
+
+    "document.addEventListener('DOMContentLoaded', function() {",
+    "\tmenuLeft = document.getElementById( 'navbar' );",
+    "\tbody = document.body;",
+    "\tshowLeft = document.getElementById( 'showLeft' );",
+    "\tmenuLeft.style.left = \"-500px\";",
+    "\tvar dropdown = document.getElementsByClassName(\"dropdown-btn\");",
+    "\tvar i;",
+    "\tfor (i = 0; i < dropdown.length; i++) {",
+    "\t\tdropdown[i].addEventListener(\"click\", function() {",
+    "\t\tthis.classList.toggle(\"active\");",
+    "\t\tvar dropdownContent = this.nextElementSibling;",
+    "\t\tdropdownContent.style.display = dropdownContent.style.display === \"none\" ? \"block\" : \"none\";",
+    "\t\t});",
+    "\t}",
+    "});\n",
+
+    "function toggleNavBar(){",
+    "\tmenuLeft.style.left = menuLeft.style.left == \"0px\" ? \"-500px\" : \"0px\";",
+    "}"
     ]

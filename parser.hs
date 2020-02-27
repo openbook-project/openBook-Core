@@ -1,7 +1,9 @@
 module OB_Parser where
 import System.IO
 import System.IO (isEOF)
+
 import HTMLWriter
+import Data.List.Split
 
 translations :: [ (String, String ) ]
 translations = [ ("par", par) ]
@@ -17,20 +19,6 @@ data Token = Token
         deriving (Show)
 
 
-buildEmptyToken :: Token
-buildEmptyToken = Token "" "" [""] [("","")] 0
-
-splitOnHelper :: String -> Char -> String -> ( String, String )
-splitOnHelper str chr buffer 
-    | null str = ( buffer, "" )
-    | head str == chr = ( buffer, (tail str) )
-    | otherwise = splitOnHelper (tail str) chr (buffer ++ [(head str)])
-
-splitOn :: String -> Char -> (String, String)
-splitOn str chr = 
-    splitOnHelper str chr ""
-
-
 data TokenData = TokenData
     {
         type_val :: String,
@@ -39,11 +27,48 @@ data TokenData = TokenData
     }
     deriving (Show)
 
+
+
+buildEmptyToken :: Token
+buildEmptyToken = Token "" "" [""] [("","")] 0
+
+
+splitOnHelper :: String -> Char -> String -> ( String, String )
+splitOnHelper str chr buffer 
+    | null str = ( buffer, "" )
+    | head str == chr = ( buffer, (tail str) )
+    | otherwise = splitOnHelper (tail str) chr (buffer ++ [(head str)])
+
+
+splitOnFirst :: String -> Char -> (String, String)
+splitOnFirst str chr = 
+    splitOnHelper str chr ""
+
+data Opts = Opts
+    {
+        t_opts :: [String],
+        t_prms :: [(String,String)]
+    }
+
+
+splitParam :: String -> Either String (String,String)
+splitParam test
+    | elem '=' test = do
+        let tmp = splitOn "=" test
+        Right ( head tmp, last tmp  )
+    | otherwise = Left test 
+
+seperateOpts :: String -> Opts
+seperateOpts raw = do 
+    let cma_sep = splitOn "," raw
+    Opts cma_sep [("","")]
+
 -- return the token type and any options and parameters
 parseTagContents tag = do
-    let a = splitOn tag '|'
+    let a = splitOnFirst tag '|'
         t = fst a
-        o = [snd a]  --TODO
+        opts_tmp = seperateOpts (snd a)
+        o = t_opts opts_tmp
         p = [("","")]
 
     TokenData t o p
