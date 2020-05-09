@@ -1,9 +1,0 @@
-
-[
-    TYPE : "par" 
-    DATA : "hello world"
-    OPTS : "center", "bold"
-    PRMS [ color : "red" ]
-
-]
-
